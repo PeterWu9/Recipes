@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F914E5BC2D406DD00078FD51 /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = F914E5BB2D406DD00078FD51 /* APIClient */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		F914E5822D402F360078FD51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,9 +25,22 @@
 		F914E5812D402F360078FD51 /* RecipesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F914E5B92D406D710078FD51 /* Exceptions for "Recipes" folder in "Recipes" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Networking/APIClient,
+			);
+			target = F914E5702D402F350078FD51 /* Recipes */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		F914E5732D402F350078FD51 /* Recipes */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F914E5B92D406D710078FD51 /* Exceptions for "Recipes" folder in "Recipes" target */,
+			);
 			path = Recipes;
 			sourceTree = "<group>";
 		};
@@ -39,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F914E5BC2D406DD00078FD51 /* APIClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +75,7 @@
 			children = (
 				F914E5732D402F350078FD51 /* Recipes */,
 				F914E5842D402F370078FD51 /* RecipesTests */,
+				F914E5BA2D406DCF0078FD51 /* Frameworks */,
 				F914E5722D402F350078FD51 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,6 +87,13 @@
 				F914E5812D402F360078FD51 /* RecipesTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F914E5BA2D406DCF0078FD51 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,6 +116,7 @@
 			);
 			name = Recipes;
 			packageProductDependencies = (
+				F914E5BB2D406DD00078FD51 /* APIClient */,
 			);
 			productName = recipes;
 			productReference = F914E5712D402F350078FD51 /* Recipes.app */;
@@ -468,6 +495,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F914E5BB2D406DD00078FD51 /* APIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = APIClient;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F914E5692D402F350078FD51 /* Project object */;
 }

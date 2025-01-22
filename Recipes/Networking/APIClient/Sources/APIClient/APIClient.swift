@@ -1,6 +1,5 @@
 //
-//  RecipesAPIClient.swift
-//  Recipes
+//  APIClient.swift
 //
 //  Created by Peter Wu on 1/21/25.
 //
@@ -32,6 +31,7 @@ final class APIClient {
     }
     
     func fetch<T: Sendable & Decodable>(path: String, headers: [String: String]? = nil, queries: [String: String]? = nil) async throws -> T {
+        // TODO: separate concerns on components / request / response parsing
         // Adds query items and path to url component
         var component = baseComponents
         component.path = path
