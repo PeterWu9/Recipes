@@ -10,6 +10,7 @@ import Foundation
 protocol RecipesRepository {
     associatedtype Recipe: RecipesModel
     
+    // TODO: Implements pagination
     func fetchAllRecipes() async throws -> [Recipe]
     func fetch(by id: Recipe.ID) async throws -> Recipe
 }
