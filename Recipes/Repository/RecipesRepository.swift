@@ -12,7 +12,6 @@ protocol RecipesRepository {
     
     // TODO: Implements pagination
     func fetchAllRecipes() async throws -> [Recipe]
-    func fetch(by id: Recipe.ID) async throws -> Recipe
 }
 
 protocol RecipesModel: Sendable & Codable & Identifiable & Hashable { }

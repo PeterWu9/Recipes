@@ -22,8 +22,4 @@ final class InMemoryRecipesRepository: RecipesRepository {
     func fetchAllRecipes() async throws -> [Recipe] {
         try allRecipes
     }
-    
-    func fetch(by id: Recipe.ID) async throws -> Recipe {
-        try allRecipes.first(where: { $0.id == id })!
-    }
 }

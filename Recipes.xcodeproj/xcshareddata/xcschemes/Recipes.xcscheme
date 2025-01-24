@@ -18,7 +18,7 @@
                BlueprintIdentifier = "F914E5702D402F350078FD51"
                BuildableName = "Recipes.app"
                BlueprintName = "Recipes"
-               ReferencedContainer = "container:recipes.xcodeproj">
+               ReferencedContainer = "container:Recipes.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -38,7 +38,7 @@
                BlueprintIdentifier = "F914E5802D402F360078FD51"
                BuildableName = "RecipesTests.xctest"
                BlueprintName = "RecipesTests"
-               ReferencedContainer = "container:recipes.xcodeproj">
+               ReferencedContainer = "container:Recipes.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "F914E58A2D402F370078FD51"
                BuildableName = "recipesUITests.xctest"
                BlueprintName = "recipesUITests"
-               ReferencedContainer = "container:recipes.xcodeproj">
+               ReferencedContainer = "container:Recipes.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,7 +71,7 @@
             BlueprintIdentifier = "F914E5702D402F350078FD51"
             BuildableName = "Recipes.app"
             BlueprintName = "Recipes"
-            ReferencedContainer = "container:recipes.xcodeproj">
+            ReferencedContainer = "container:Recipes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -88,7 +88,7 @@
             BlueprintIdentifier = "F914E5702D402F350078FD51"
             BuildableName = "Recipes.app"
             BlueprintName = "Recipes"
-            ReferencedContainer = "container:recipes.xcodeproj">
+            ReferencedContainer = "container:Recipes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

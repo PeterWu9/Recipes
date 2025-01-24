@@ -6,7 +6,7 @@
 
 import Foundation
 
-final class APIClient {
+public final class APIClient {
     private lazy var baseComponents: URLComponents = {
         var components = URLComponents()
         components.scheme = scheme
@@ -20,7 +20,7 @@ final class APIClient {
     
     private let decoder = JSONDecoder()
         
-    init(
+    public init(
         session: URLSession = .shared,
         scheme: String = "https",
         host: String
@@ -30,7 +30,7 @@ final class APIClient {
         self.session = session
     }
     
-    func fetch<T: Sendable & Decodable>(path: String, headers: [String: String]? = nil, queries: [String: String]? = nil) async throws -> T {
+    public func fetch<T: Sendable & Decodable>(path: String, headers: [String: String]? = nil, queries: [String: String]? = nil) async throws -> T {
         // TODO: separate concerns on components / request / response parsing
         // Adds query items and path to url component
         var component = baseComponents
