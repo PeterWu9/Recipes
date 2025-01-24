@@ -34,15 +34,16 @@ public final class APIClient {
         // TODO: separate concerns on components / request / response parsing
         // Adds query items and path to url component
         var component = baseComponents
-        component.path = path
         if let queries {
             component.queryItems = queries.map { URLQueryItem(name: $0, value: $1) }
         }
         
         // Creates url from components
-        guard let url = component.url else {
+        guard var url = component.url else {
             throw APIError.errorCreatingUrlFrom(component)
         }
+        
+        url.append(path: path)
         
         // Create url request (add any headers)
         var request = URLRequest(url: url)
@@ -64,7 +65,18 @@ public final class APIClient {
         switch statusCode {
         case (200..<300):
             // proceed to decode data
-            return try decoder.decode(T.self, from: data)
+            do {
+                return try decoder.decode(T.self, from: data)
+            } catch let error as DecodingError {
+                throw APIError
+                    .errorDecoding(
+                        data: data,
+                        description: error.localizedDescription,
+                        error: error
+                    )
+            } catch {
+                throw error
+            }
         default:
             // TODO: Handle error
             throw APIError.responseError(statusCode: statusCode, data: data)
@@ -73,9 +85,10 @@ public final class APIClient {
 }
 
 extension APIClient {
-    enum APIError: Error {
+    public enum APIError: Error {
         case errorCreatingUrlFrom(URLComponents)
         case invalidResponse(URLResponse)
         case responseError(statusCode: Int, data: Data)
+        case errorDecoding(data: Data, description: String, error: Error)
     }
 }

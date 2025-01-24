@@ -5,7 +5,6 @@
 //  Created by Peter Wu on 1/22/25.
 //
 
-import Foundation
 
 protocol RecipesRepository {
     associatedtype Recipe: RecipesModel
@@ -15,3 +14,7 @@ protocol RecipesRepository {
 }
 
 protocol RecipesModel: Sendable & Codable & Identifiable & Hashable { }
+
+enum RecipesRepositoryError: Error {
+    case decodingError(String)
+}
