@@ -4,9 +4,8 @@
 //
 //  Created by Peter Wu on 1/24/25.
 //
-
+@testable import RecipesRepository
 import Testing
-@testable import Recipes
 
 struct RemoteRecipesRepositoryTests {
 

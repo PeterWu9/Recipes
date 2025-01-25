@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RecipesUtility
 
 final class InMemoryRecipesRepository: RecipesRepository {
     private var allRecipes: [Recipe] {

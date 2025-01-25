@@ -7,6 +7,7 @@
 import Foundation
 import Testing
 @testable import Recipes
+@testable import RecipesRepository
 
 struct RecipeMockResponseTests {
     enum RecipeMockResponseTestsError: Error {

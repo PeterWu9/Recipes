@@ -54,8 +54,8 @@ final class RemoteRecipesRepository: RecipesRepository {
 }
 
 extension RemoteRecipesRepository {
-    static let defaultHost = "d3jbb8n5wk0qxi.cloudfront.net"
-    static let allRecipes = RemoteRecipesRepository(host: defaultHost, recipesPath: "recipes.json")
-    static let malFormed = RemoteRecipesRepository(host: defaultHost, recipesPath: "recipes-malformed.json")
-    static let empty = RemoteRecipesRepository(host: defaultHost, recipesPath: "recipes-empty.json")
+    static var defaultHost: String { "d3jbb8n5wk0qxi.cloudfront.net" }
+    static var allRecipes: RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes.json") }
+    static var malFormed: RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes-malformed.json") }
+    static var empty:RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes-empty.json") }
 }

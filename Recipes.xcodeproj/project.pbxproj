@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F914E5BC2D406DD00078FD51 /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = F914E5BB2D406DD00078FD51 /* APIClient */; };
+		F914E6722D44C88E0078FD51 /* RecipesRepository in Frameworks */ = {isa = PBXBuildFile; productRef = F914E6712D44C88E0078FD51 /* RecipesRepository */; };
+		F914E6752D44C8F10078FD51 /* RecipesUtility in Frameworks */ = {isa = PBXBuildFile; productRef = F914E6742D44C8F10078FD51 /* RecipesUtility */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +32,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Networking/APIClient,
+				Repository/RecipesRepository,
+				Utility/RecipesUtility,
 			);
 			target = F914E5702D402F350078FD51 /* Recipes */;
 		};
@@ -56,6 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F914E6722D44C88E0078FD51 /* RecipesRepository in Frameworks */,
+				F914E6752D44C8F10078FD51 /* RecipesUtility in Frameworks */,
 				F914E5BC2D406DD00078FD51 /* APIClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -117,6 +123,8 @@
 			name = Recipes;
 			packageProductDependencies = (
 				F914E5BB2D406DD00078FD51 /* APIClient */,
+				F914E6712D44C88E0078FD51 /* RecipesRepository */,
+				F914E6742D44C8F10078FD51 /* RecipesUtility */,
 			);
 			productName = recipes;
 			productReference = F914E5712D402F350078FD51 /* Recipes.app */;
@@ -500,6 +508,14 @@
 		F914E5BB2D406DD00078FD51 /* APIClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = APIClient;
+		};
+		F914E6712D44C88E0078FD51 /* RecipesRepository */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RecipesRepository;
+		};
+		F914E6742D44C8F10078FD51 /* RecipesUtility */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RecipesUtility;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
