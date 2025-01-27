@@ -6,14 +6,10 @@
 //
 
 
-protocol RecipesRepository {
-    associatedtype Recipe: RecipesModel
-    
+public protocol RecipesRepository {
     // TODO: Implements pagination
     func fetchAllRecipes() async throws -> [Recipe]
 }
-
-protocol RecipesModel: Sendable & Codable & Identifiable & Hashable { }
 
 enum RecipesRepositoryError: Error {
     case decodingError(String)

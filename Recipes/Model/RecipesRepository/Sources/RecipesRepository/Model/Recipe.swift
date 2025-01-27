@@ -7,18 +7,20 @@
 
 import Foundation
 
-struct Recipe: RecipesModel {
-    let id: String
-    let cuisine: CuisineType
-    let name: String
-    let photoUrl: PhotoUrl?
+public protocol RecipesModel: Sendable & Codable & Identifiable & Hashable { }
+
+public struct Recipe: RecipesModel {
+    public let id: String
+    public let cuisine: CuisineType
+    public let name: String
+    public let photoUrl: PhotoUrl?
     
-    enum PhotoUrl: Hashable, Codable {
+    public enum PhotoUrl: Hashable, Codable, Sendable {
         case small(String), large(String)
     }
 
-    enum CuisineType: Hashable, Codable {
-        enum KnownCuisine: String, Codable {
+    public enum CuisineType: Hashable, Codable, Sendable {
+        public enum KnownCuisine: String, Codable, Sendable {
             case american
             case british
             case canadian
