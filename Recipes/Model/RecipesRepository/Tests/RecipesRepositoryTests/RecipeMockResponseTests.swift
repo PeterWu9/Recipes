@@ -6,8 +6,8 @@
 //
 import Foundation
 import Testing
-@testable import Recipes
 @testable import RecipesRepository
+@testable import SharedResources
 
 struct RecipeMockResponseTests {
     enum RecipeMockResponseTestsError: Error {
@@ -18,10 +18,14 @@ struct RecipeMockResponseTests {
     /// Tests decoding mocks
     @Test func decodeMock() async throws {
         // Locate resource from bundle
-        let response = try Bundle.main.decode(type: RecipesResponseDTO.self, fileName: "RecipesResponseAllRecipes", fileExtension: ".json")
+        // SharedResources.decode(type: RecipesResponseDTO.self, fileName: "", fileExtension: "")
+        let response = try SharedResources.decode(
+            type: RecipesResponseDTO.self,
+            fileName: "RecipesResponseAllRecipes",
+            fileExtension: ".json"
+        )
         // Asserts on recipes response dto from json file
         let firstRecipe = try #require(response.recipes.first)
         #expect(firstRecipe.cuisine == "Malaysian")
     }
-
 }

@@ -12,20 +12,24 @@ let package = Package(
             name: "RecipesRepository",
             targets: ["RecipesRepository"]),
     ],
-    dependencies: [.package(name: "RecipesUtility",
-                            path: "../Utility/RecipesUtility"),
-                   .package(name: "APIClient",
-                            path: "../Networking/APIClient")],
+    dependencies: [.package(name: "APIClient",
+                            path: "../Service/APIClient")],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
+            name: "SharedResources",
+            resources: [.process("RecipesResponseAllRecipes.json")]
+        ),
+        .target(
             name: "RecipesRepository",
-            dependencies: ["RecipesUtility",
-                           "APIClient"]),
+            dependencies: ["APIClient",
+                           "SharedResources"]
+        ),
         .testTarget(
             name: "RecipesRepositoryTests",
-            dependencies: ["RecipesRepository"]
+            dependencies: ["RecipesRepository",
+                           "SharedResources"]
         ),
     ]
 )

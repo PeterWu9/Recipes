@@ -31,9 +31,7 @@
 		F914E5B92D406D710078FD51 /* Exceptions for "Recipes" folder in "Recipes" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Networking/APIClient,
-				Repository/RecipesRepository,
-				Utility/RecipesUtility,
+				Service/APIClient,
 			);
 			target = F914E5702D402F350078FD51 /* Recipes */;
 		};

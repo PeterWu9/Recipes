@@ -6,12 +6,12 @@
 //
 
 import Foundation
-import RecipesUtility
+import SharedResources
 
 final class InMemoryRecipesRepository: RecipesRepository {
     private var allRecipes: [Recipe] {
         get throws {
-            try Bundle.main.decode(
+            try SharedResources.decode(
                 type: RecipesResponseDTO.self,
                 fileName: "RecipesResponseAllRecipes",
                 fileExtension: ".json"
