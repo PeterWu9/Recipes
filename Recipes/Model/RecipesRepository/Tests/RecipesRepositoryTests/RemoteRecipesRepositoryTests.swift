@@ -10,7 +10,6 @@ import Testing
 struct RemoteRecipesRepositoryTests {
 
     @Test func allRecipes() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
         let repository = RemoteRecipesRepository.allRecipes
         let recipes = try await repository.fetchAllRecipes()
         #expect(!recipes.isEmpty)

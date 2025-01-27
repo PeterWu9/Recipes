@@ -8,18 +8,18 @@
 import APIClient
 import Foundation
 
-final class RemoteRecipesRepository: RecipesRepository {
+public final class RemoteRecipesRepository: RecipesRepository {
     let host: String
     let recipesPath: String
     private let client: APIClient
     
-    init(host: String, recipesPath: String) {
+    public init(host: String, recipesPath: String) {
         self.host = host
         self.recipesPath = recipesPath
         self.client = .init(host: host)
     }
     
-    func fetchAllRecipes() async throws -> [Recipe] {
+    public func fetchAllRecipes() async throws -> [Recipe] {
         do {
             let response: RecipesResponseDTO = try await client.fetch(path: recipesPath)
             return response.recipes.map(Recipe.init(from:))
@@ -54,8 +54,8 @@ final class RemoteRecipesRepository: RecipesRepository {
 }
 
 extension RemoteRecipesRepository {
-    static var defaultHost: String { "d3jbb8n5wk0qxi.cloudfront.net" }
-    static var allRecipes: RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes.json") }
-    static var malFormed: RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes-malformed.json") }
-    static var empty:RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes-empty.json") }
+    public static var defaultHost: String { "d3jbb8n5wk0qxi.cloudfront.net" }
+    public static var allRecipes: RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes.json") }
+    public static var malFormed: RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes-malformed.json") }
+    public static var empty:RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes-empty.json") }
 }
