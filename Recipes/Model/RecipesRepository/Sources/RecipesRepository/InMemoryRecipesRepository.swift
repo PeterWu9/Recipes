@@ -8,7 +8,7 @@
 import Foundation
 import SharedResources
 
-final class InMemoryRecipesRepository: RecipesRepository {
+public final class InMemoryRecipesRepository: RecipesRepository {
     private var allRecipes: [Recipe] {
         get throws {
             try SharedResources.decode(
@@ -20,7 +20,8 @@ final class InMemoryRecipesRepository: RecipesRepository {
             .map(Recipe.init(from:))
         }
     }
-    func fetchAllRecipes() async throws -> [Recipe] {
+    public init() { }
+    public func fetchAllRecipes() async throws -> [Recipe] {
         try allRecipes
     }
 }
