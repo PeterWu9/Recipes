@@ -10,7 +10,7 @@ struct RecipesList: View {
     let recipes: [RecipeCell.CellData]
     
     var body: some View {
-        List {
+        LazyVStack(alignment: .leading) {
             ForEach(recipes, id: \.id) {
                 RecipeCell(data: $0)
             }
@@ -20,13 +20,16 @@ struct RecipesList: View {
 
 #Preview(traits: .modifier(PreviewData())) {
     AllRecipesPreviewContainer { recipes in
-        RecipesList(recipes: recipes.map {
-            RecipeCell.CellData.init(
-                id: $0.id,
-                name: $0.name,
-                cuisineName: $0.cuisine.title,
-                imageUrl: $0.photoUrl?.urlString
-            )
-        })
+        ScrollView {
+            RecipesList(recipes: recipes.map {
+                RecipeCell.CellData.init(
+                    id: $0.id,
+                    name: $0.name,
+                    cuisineName: $0.cuisine.title,
+                    imageUrl: $0.photoUrl?.urlString
+                )
+            })
+        }
     }
+    .padding()
 }
