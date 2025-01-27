@@ -10,7 +10,7 @@ struct RecipeCell: View {
     let data: CellData
     
     var body: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .center) {
             // Placeholder Image
             RoundedRectangle(cornerRadius: 8)
                 .fill(.gray)
@@ -21,11 +21,6 @@ struct RecipeCell: View {
                 Text(data.cuisineName)
                     .font(.subheadline)
                     .foregroundStyle(.brown)
-                
-                if let videoLinkUrl = data.videoLinkUrl {
-                    Text(videoLinkUrl)
-                        .font(.footnote)
-                }
             }
         }
     }
@@ -34,7 +29,6 @@ struct RecipeCell: View {
         let id: String
         let name: String
         let cuisineName: String
-        let videoLinkUrl: String?
         let imageUrl: String?
     }
 }
@@ -45,7 +39,6 @@ struct RecipeCell: View {
             id: "0c6ca6e7-e32a-4053-b824-1dbf749910d8",
             name: "Apam Balik",
             cuisineName: "Malaysian",
-            videoLinkUrl: "https://www.youtube.com/watch?v=6R8ffRRJcrg",
             imageUrl: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/small.jpg"
         )
     )
