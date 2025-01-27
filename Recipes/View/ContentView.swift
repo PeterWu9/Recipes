@@ -8,17 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(ViewModel.self) private var viewModel
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            ScrollView {
+                RecipesList(recipes: viewModel.allRecipes)
+                    .padding()
+            }
+            .ignoresSafeArea(edges: .bottom)
+            .navigationTitle("Recipes")
+            .task {
+                await viewModel.fetchAllRecipes()
+            }
         }
-        .padding()
     }
 }
 
-#Preview {
+#Preview(traits: .modifier(PreviewData())) {
     ContentView()
 }
