@@ -11,17 +11,37 @@ import SharedResources
 public final class InMemoryRecipesRepository: RecipesRepository {
     private var allRecipes: [Recipe] {
         get throws {
-            try SharedResources.decode(
+            let fileName = if case .allRecipes = mode {
+                "RecipesResponseAllRecipes"
+            } else {
+                "RecipesResponseMalformed"
+            }
+
+            return try SharedResources.decode(
                 type: RecipesResponseDTO.self,
-                fileName: "RecipesResponseAllRecipes",
+                fileName: fileName,
                 fileExtension: ".json"
             )
             .recipes
             .map(Recipe.init(from:))
         }
     }
-    public init() { }
+    let mode: Mode
+    
+    public init(mode: Mode) {
+        self.mode = mode
+    }
+    
+    public enum Mode: Sendable {
+        case allRecipes, empty, malformed
+    }
+    
     public func fetchAllRecipes() async throws -> [Recipe] {
-        try allRecipes
+        switch mode {
+        case .allRecipes, .malformed:
+            try allRecipes
+        case .empty:
+            []
+        }
     }
 }

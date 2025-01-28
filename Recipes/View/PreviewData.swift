@@ -1,5 +1,5 @@
 //
-//  AllRecipesPreviewData.swift
+//  PreviewData.swift
 //  Recipes
 //
 //  Created by Peter Wu on 1/27/25.
@@ -10,7 +10,27 @@ import SwiftUI
 
 struct AllRecipesPreviewData: PreviewModifier {
     static func makeSharedContext() async throws -> ViewModel {
-        .init(repository: InMemoryRecipesRepository())
+        .init(repository: InMemoryRecipesRepository(mode: .allRecipes))
+    }
+    func body(content: Content, context: ViewModel) -> some View {
+        content
+            .environment(context)
+    }
+}
+
+struct EmptyPreviewData: PreviewModifier {
+    static func makeSharedContext() async throws -> ViewModel {
+        .init(repository: InMemoryRecipesRepository(mode: .empty))
+    }
+    func body(content: Content, context: ViewModel) -> some View {
+        content
+            .environment(context)
+    }
+}
+
+struct MalformedPreviewData: PreviewModifier {
+    static func makeSharedContext() async throws -> ViewModel {
+        .init(repository: InMemoryRecipesRepository(mode: .malformed))
     }
     func body(content: Content, context: ViewModel) -> some View {
         content

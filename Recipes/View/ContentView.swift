@@ -12,7 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            VStack {
                 switch viewModel.loadingState {
                 case .none:
                     EmptyView()
@@ -21,16 +21,20 @@ struct ContentView: View {
                 case .loaded(let result):
                     switch result {
                     case .empty:
-                        ContentUnavailableView("No recipes are available.  Please try again later!", image: "fork.knife.circle")
+                        ContentUnavailableView("No recipes are available.  Please try again later!", systemImage: "fork.knife.circle")
+                            .padding(.bottom, .bottomPadding)
                     case .withLoad(let recipes):
-                        RecipesList(recipes: recipes)
-                            .padding()
+                        ScrollView {
+                            RecipesList(recipes: recipes)
+                                .padding()
+                                .ignoresSafeArea(edges: .bottom)
+                        }
                     case .withError:
-                        ContentUnavailableView("We apologize.  We're running into some issues.  Please try again later!", image: "exclamationmark.circle")
+                        ContentUnavailableView("We apologize.  We're running into some issues.  Please try again later!", systemImage: "exclamationmark.circle")
+                            .padding(.bottom, .bottomPadding)
                     }
                 }
             }
-            .ignoresSafeArea(edges: .bottom)
             .navigationTitle("Recipes")
             .task {
                 await viewModel.fetchAllRecipes()
@@ -39,14 +43,18 @@ struct ContentView: View {
     }
 }
 
+extension CGFloat {
+    static let bottomPadding: Self = 200
+}
+
 #Preview(traits: .modifier(AllRecipesPreviewData())) {
     ContentView()
 }
 
-#Preview("Empty") {
-    
+#Preview("Empty", traits: .modifier(EmptyPreviewData())) {
+    ContentView()
 }
 
-#Preview("Malformed") {
-    
+#Preview("Malformed", traits: .modifier(MalformedPreviewData())) {
+    ContentView()
 }
