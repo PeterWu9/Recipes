@@ -10,7 +10,11 @@ import SwiftUI
 
 struct AllRecipesPreviewData: PreviewModifier {
     static func makeSharedContext() async throws -> ViewModel {
-        .init(repository: InMemoryRecipesRepository(mode: .allRecipes))
+        .init(
+            repository: InMemoryRecipesRepository(
+                configuration: .init(mode: .allRecipes)
+            )
+        )
     }
     func body(content: Content, context: ViewModel) -> some View {
         content
@@ -20,7 +24,11 @@ struct AllRecipesPreviewData: PreviewModifier {
 
 struct EmptyPreviewData: PreviewModifier {
     static func makeSharedContext() async throws -> ViewModel {
-        .init(repository: InMemoryRecipesRepository(mode: .empty))
+        .init(
+            repository: InMemoryRecipesRepository(
+                configuration: .init(mode: .empty)
+            )
+        )
     }
     func body(content: Content, context: ViewModel) -> some View {
         content
@@ -30,7 +38,11 @@ struct EmptyPreviewData: PreviewModifier {
 
 struct MalformedPreviewData: PreviewModifier {
     static func makeSharedContext() async throws -> ViewModel {
-        .init(repository: InMemoryRecipesRepository(mode: .malformed))
+        .init(
+            repository: InMemoryRecipesRepository(
+                configuration: .init(mode: .malformed)
+            )
+        )
     }
     func body(content: Content, context: ViewModel) -> some View {
         content
