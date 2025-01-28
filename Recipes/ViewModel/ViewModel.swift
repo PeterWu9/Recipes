@@ -17,13 +17,13 @@ final class ViewModel {
     
     private let repository: any RecipesRepository
     
-    private(set) var loadingState: LoadingState<CellData>?
+    private(set) var loadingState: LoadingState?
     
-    enum LoadingState<Item> {
+    enum LoadingState: Equatable {
         case loading
-        case loaded(Result<DataState, Error>)
-        enum DataState {
-            case empty, full([Item])
+        case loaded(LoadResult)
+        enum LoadResult: Equatable {
+            case empty, withLoad([CellData]), withError(String)
         }
     }
     
@@ -32,36 +32,32 @@ final class ViewModel {
     }
     
     func fetchAllRecipes() async {
-        if case .loading = loadingState {
+        if loadingState == .loading {
             print("Still loading...skip")
             return
         }
         
         loadingState = .loading
-        loadingState = await .loaded(
-            Result {
-                let fetched = try await repository.fetchAllRecipes().map {
-                    CellData.init(
-                        id: $0.id,
-                        name: $0.name,
-                        cuisineName: $0.cuisine.title,
-                        imageUrl: $0.photoUrl?.urlString
-                    )
-                }
-                return fetched.isEmpty
-                ? LoadingState.DataState.empty
-                : LoadingState.DataState.full(fetched)
-            }
-        )
         
-        // update allRecipes cache
-        if case .loaded(let result) = loadingState {
-            switch result {
-            case let .success(.full(recipes)):
-                cachedAllRecipes = recipes
-            default:
-                break
+        do {
+            let fetched = try await repository.fetchAllRecipes().map {
+                CellData.init(
+                    id: $0.id,
+                    name: $0.name,
+                    cuisineName: $0.cuisine.title,
+                    imageUrl: $0.photoUrl?.urlString
+                )
             }
+            
+            if fetched.isEmpty {
+                loadingState = .loaded(.empty)
+            } else {
+                loadingState = .loaded(.withLoad(fetched))
+                cachedAllRecipes = fetched
+            }
+        } catch {
+            loadingState = LoadingState
+                .loaded(.withError(error.localizedDescription))
         }
     }
 }

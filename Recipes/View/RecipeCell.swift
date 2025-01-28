@@ -25,7 +25,7 @@ struct RecipeCell: View {
         }
     }
     
-    struct CellData {
+    struct CellData: Equatable {
         let id: String
         let name: String
         let cuisineName: String
