@@ -23,7 +23,7 @@ struct AllRecipesPreviewContainer<Content: View>: View {
     @Environment(ViewModel.self) var viewModel
     var makeContentWithRecipes: ([RecipeCell.CellData]) -> Content
     var body: some View {
-        makeContentWithRecipes(viewModel.allRecipes)
+        makeContentWithRecipes(viewModel.cachedAllRecipes)
             .task {
                 await viewModel.fetchAllRecipes()
             }

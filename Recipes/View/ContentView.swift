@@ -13,7 +13,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                RecipesList(recipes: viewModel.allRecipes)
+                RecipesList(recipes: viewModel.cachedAllRecipes)
                     .padding()
             }
             .ignoresSafeArea(edges: .bottom)
