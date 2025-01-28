@@ -18,6 +18,8 @@ struct ContentView: View {
                     EmptyView()
                 case .loading:
                     ProgressView()
+                        .scaleEffect(2)
+                        .padding(.bottom, .bottomPadding)
                 case .loaded(let result):
                     switch result {
                     case .empty:
@@ -40,6 +42,17 @@ struct ContentView: View {
                 await viewModel.fetchAllRecipes()
             }
         }
+        .overlay(alignment: .bottomTrailing, content: {
+            Button {
+                Task {
+                    await viewModel.fetchAllRecipes()
+                }
+            } label: {
+                Image(systemName: "arrow.clockwise.circle")
+                    .font(.largeTitle)
+            }
+            .padding([.bottom, .trailing], 40)
+        })
     }
 }
 
