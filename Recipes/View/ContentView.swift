@@ -13,8 +13,22 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                RecipesList(recipes: viewModel.cachedAllRecipes)
-                    .padding()
+                switch viewModel.loadingState {
+                case .none:
+                    EmptyView()
+                case .loading:
+                    ProgressView()
+                case .loaded(let result):
+                    switch result {
+                    case .empty:
+                        ContentUnavailableView("No recipes are available.  Please try again later!", image: "fork.knife.circle")
+                    case .withLoad(let recipes):
+                        RecipesList(recipes: recipes)
+                            .padding()
+                    case .withError:
+                        ContentUnavailableView("We apologize.  We're running into some issues.  Please try again later!", image: "exclamationmark.circle")
+                    }
+                }
             }
             .ignoresSafeArea(edges: .bottom)
             .navigationTitle("Recipes")
