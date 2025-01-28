@@ -10,9 +10,14 @@ import SwiftUI
 
 @main
 struct RecipesApp: App {
+    #if DEBUG
+    @State private var viewModel = ViewModel(repository: RemoteRecipesRepository.allRecipesNoCache)
+    #else
     @State private var viewModel = ViewModel(
-        repository: RemoteRecipesRepository.allRecipes
-    )
+        repository: RemoteRecipesRepository
+            .allRecipes)
+    #endif
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

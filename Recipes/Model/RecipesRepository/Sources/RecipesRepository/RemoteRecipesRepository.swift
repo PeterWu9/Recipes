@@ -13,10 +13,19 @@ public final class RemoteRecipesRepository: RecipesRepository {
     let recipesPath: String
     private let client: APIClient
     
-    public init(host: String, recipesPath: String) {
+    public init(
+        host: String,
+        recipesPath: String,
+        urlSessionConfiguration: URLSessionConfiguration? = nil
+    ) {
         self.host = host
         self.recipesPath = recipesPath
-        self.client = .init(host: host)
+        let session = if let urlSessionConfiguration {
+            URLSession(configuration: urlSessionConfiguration)
+        } else {
+            URLSession.shared
+        }
+        self.client = .init(session: session, host: host)
     }
     
     public func fetchAllRecipes() async throws -> [Recipe] {
@@ -55,6 +64,13 @@ public final class RemoteRecipesRepository: RecipesRepository {
 
 extension RemoteRecipesRepository {
     public static var defaultHost: String { "d3jbb8n5wk0qxi.cloudfront.net" }
+    public static var allRecipesNoCache: RemoteRecipesRepository {
+        .init(
+            host: defaultHost,
+            recipesPath: "recipes.json",
+            urlSessionConfiguration: .ephemeral
+        )
+    }
     public static var allRecipes: RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes.json") }
     public static var malFormed: RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes-malformed.json") }
     public static var empty:RemoteRecipesRepository { .init(host: defaultHost, recipesPath: "recipes-empty.json") }
