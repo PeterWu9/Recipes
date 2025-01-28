@@ -6,14 +6,8 @@
 
 import Foundation
 
-public final class APIClient {
-    private lazy var baseComponents: URLComponents = {
-        var components = URLComponents()
-        components.scheme = scheme
-        components.host = host
-        return components
-    }()
-    
+public final class APIClient: Sendable {
+    private let baseComponents: URLComponents
     private let scheme: String
     private let host: String
     private let session: URLSession
@@ -28,6 +22,12 @@ public final class APIClient {
         self.scheme = scheme
         self.host = host
         self.session = session
+        self.baseComponents = {
+            var components = URLComponents()
+            components.scheme = scheme
+            components.host = host
+            return components
+        }()
     }
     
     public func fetch<T: Sendable & Decodable>(path: String, headers: [String: String]? = nil, queries: [String: String]? = nil) async throws -> T {

@@ -6,7 +6,7 @@
 //
 
 
-public protocol RecipesRepository {
+public protocol RecipesRepository: Sendable {
     // TODO: Implements pagination
     func fetchAllRecipes() async throws -> [Recipe]
 }
