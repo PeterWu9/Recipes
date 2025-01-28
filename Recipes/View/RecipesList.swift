@@ -18,7 +18,7 @@ struct RecipesList: View {
     }
 }
 
-#Preview(traits: .modifier(PreviewData())) {
+#Preview(traits: .modifier(AllRecipesPreviewData())) {
     AllRecipesPreviewContainer { recipes in
         ScrollView {
             RecipesList(recipes: recipes)

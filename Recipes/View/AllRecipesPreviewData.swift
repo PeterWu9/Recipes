@@ -1,5 +1,5 @@
 //
-//  PreviewData.swift
+//  AllRecipesPreviewData.swift
 //  Recipes
 //
 //  Created by Peter Wu on 1/27/25.
@@ -8,7 +8,7 @@
 import RecipesRepository
 import SwiftUI
 
-struct PreviewData: PreviewModifier {
+struct AllRecipesPreviewData: PreviewModifier {
     static func makeSharedContext() async throws -> ViewModel {
         .init(repository: InMemoryRecipesRepository())
     }

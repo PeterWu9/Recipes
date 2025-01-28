@@ -39,6 +39,14 @@ struct ContentView: View {
     }
 }
 
-#Preview(traits: .modifier(PreviewData())) {
+#Preview(traits: .modifier(AllRecipesPreviewData())) {
     ContentView()
+}
+
+#Preview("Empty") {
+    
+}
+
+#Preview("Malformed") {
+    
 }
