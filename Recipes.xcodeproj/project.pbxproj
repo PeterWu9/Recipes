@@ -31,6 +31,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Service/APIClient,
+				Service/ImageLoader,
 			);
 			target = F914E5702D402F350078FD51 /* Recipes */;
 		};
