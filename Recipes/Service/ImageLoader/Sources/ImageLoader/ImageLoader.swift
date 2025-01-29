@@ -13,13 +13,14 @@ public protocol ImageLoaderProtocol {
     */
 }
 
+enum ImageLoaderError: Error {
+    case invalidUrl(String)
+    case invalidServerResponse(URLResponse)
+}
+
 public actor RemoteImageLoader: ImageLoaderProtocol {
     private let cache = NSCache<NSURL, NSData>()
     
-    enum ImageLoaderError: Error {
-        case invalidUrl(String)
-        case invalidServerResponse(URLResponse)
-    }
     public func fetch(_ url: String) async throws -> (String, Data) {
         // check if we have image data in cache
         guard let url = URL(string: url) else {
@@ -40,6 +41,37 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
             cache.setObject(data as NSData, forKey: url as NSURL)
             // return data
             return (url.absoluteString, data)
+        }
+    }
+}
+
+import UIKit
+/// Simulates downloading data from network by loading from Bundle, with random loading time delay
+/// introduced
+public actor BundleImageLoader: ImageLoaderProtocol {
+    private var cache = [String: UIImage]()
+    // Max loading time in seconds
+    private(set) var maxLoadingTime: Int
+    
+    init(maxLoadingTime: Int = 5) {
+        self.maxLoadingTime = maxLoadingTime
+    }
+    
+    public func fetch(_ url: String) async throws -> (String, Data) {
+        // check if we have image data in cache
+        guard let image = UIImage(
+            named: url,
+            in: Bundle.module, with: nil
+        ) else {
+            throw ImageLoaderError.invalidUrl(url)
+        }
+        
+        if let imageData = cache[url]?.pngData() {
+            return (url, imageData)
+        } else {
+            try await Task.sleep(for: .seconds(maxLoadingTime))
+            cache[url] = image
+            return (url, image.pngData()!)
         }
     }
 }
