@@ -39,10 +39,11 @@ public struct Recipe: RecipesModel {
         case custom(String)
         
         init(_ rawValue: String) {
-            if let known = KnownCuisine(rawValue: rawValue) {
+            let name = rawValue.lowercased()
+            if let known = KnownCuisine(rawValue: name) {
                 self = .known(known)
             } else {
-                self = .custom(rawValue)
+                self = .custom(name)
             }
         }
     }
