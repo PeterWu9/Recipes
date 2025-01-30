@@ -36,34 +36,6 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "3432E439-9724-48C7-9936-B6B7CCF75126 - 1e1c16963d11e51e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for RecipesRepository.RemoteRecipesRepository.fetchAllRecipes() async throws -&gt; Swift.Array&lt;RecipesRepository.Recipe&gt;"
-                  moduleName = "Recipes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peterwu/Developer/recipes/Recipes/Model/RecipesRepository/Sources/RecipesRepository/RemoteRecipesRepository.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "38"
-                  endingLineNumber = "38">
-               </Location>
-               <Location
-                  uuid = "3432E439-9724-48C7-9936-B6B7CCF75126 - af0b09b645d504b6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "implicit closure #1 (RecipesRepository.RecipeDTO) -&gt; RecipesRepository.Recipe in RecipesRepository.RemoteRecipesRepository.fetchAllRecipes() async throws -&gt; Swift.Array&lt;RecipesRepository.Recipe&gt;"
-                  moduleName = "Recipes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peterwu/Developer/recipes/Recipes/Model/RecipesRepository/Sources/RecipesRepository/RemoteRecipesRepository.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "38"
-                  endingLineNumber = "38">
-               </Location>
-               <Location
                   uuid = "3432E439-9724-48C7-9936-B6B7CCF75126 - 1e1c16963d11e5d0"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"

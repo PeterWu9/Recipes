@@ -19,6 +19,9 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
             throw ImageLoaderError.invalidUrl(url)
         }
         if let imageData = cache.item(for: url as NSURL){
+            #if DEBUG
+            print("\(url) retrieved from cache")
+            #endif
             return (url.absoluteString, imageData as Data)
         } else {
             // download data
@@ -32,6 +35,9 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
             // cache data
             cache.set(data as NSData, for: url as NSURL)
             // return data
+            #if DEBUG
+            print("\(url) downloaded and saved to cache")
+            #endif
             return (url.absoluteString, data)
         }
     }
