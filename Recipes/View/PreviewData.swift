@@ -5,6 +5,7 @@
 //  Created by Peter Wu on 1/27/25.
 //
 
+import ImageLoader
 import RecipesRepository
 import SwiftUI
 
@@ -45,6 +46,18 @@ struct MalformedPreviewData: PreviewModifier {
         )
     }
     func body(content: Content, context: ViewModel) -> some View {
+        content
+            .environment(context)
+    }
+}
+
+struct BundleImageAssetPreviewData: PreviewModifier {
+    static func makeSharedContext() async throws -> ImageAssetViewModel {
+        .init(
+            imageService: BundleImageLoader(maxLoadingTime: 1)
+        )
+    }
+    func body(content: Content, context: ImageAssetViewModel) -> some View {
         content
             .environment(context)
     }

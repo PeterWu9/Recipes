@@ -25,7 +25,13 @@ public final class RemoteRecipesRepository: RecipesRepository {
         } else {
             URLSession.shared
         }
-        self.client = .init(session: session, host: host)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        self.client = .init(
+            session: session,
+            host: host,
+            decoder: decoder
+        )
     }
     
     public func fetchAllRecipes() async throws -> [Recipe] {

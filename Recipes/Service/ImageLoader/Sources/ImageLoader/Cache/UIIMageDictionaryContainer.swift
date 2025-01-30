@@ -10,8 +10,8 @@ import Synchronization
 
 public final class UIIMageDictionaryContainer: CacheProtocol {
     let lock = Mutex<[String: UIImage]>([:])
-    public typealias Key = String
-    public typealias Value = UIImage
+    public init() { }
+    
     public func item(for key: String) -> UIImage? {
         lock.withLock { $0[key] }
     }

@@ -9,6 +9,7 @@ import Foundation
 import ImageLoader
 import UIKit
 
+@MainActor
 @Observable
 final class ImageAssetViewModel {
     private let imageService: any ImageLoaderProtocol

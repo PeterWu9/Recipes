@@ -53,7 +53,7 @@ extension Recipe {
         id = dto.uuid
         name = dto.name
         
-        switch (dto.photoURLSmall, dto.photoURLLarge) {
+        switch (dto.photoUrlSmall, dto.photoUrlLarge) {
         case (.some(let smallPhotoUrl), _):
             photoUrl = .small(smallPhotoUrl)
         case (nil, .some(let largePhotoUrl)):

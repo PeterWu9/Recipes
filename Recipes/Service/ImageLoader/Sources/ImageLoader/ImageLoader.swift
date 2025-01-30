@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol ImageLoaderProtocol {
+public protocol ImageLoaderProtocol: Sendable {
     associatedtype Cache: CacheProtocol
     init(cache: Cache)
     /// Fetches image from a given url string, and returns `Data` that could be used to reconstruct an image

@@ -5,6 +5,7 @@
 //  Created by Peter Wu on 1/21/25.
 //
 
+import ImageLoader
 import RecipesRepository
 import SwiftUI
 
@@ -17,11 +18,15 @@ struct RecipesApp: App {
         repository: RemoteRecipesRepository
             .allRecipes)
     #endif
+    @State private var imageAssetViewModel = ImageAssetViewModel(
+        imageService: RemoteImageLoader(cache: .init())
+    )
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(viewModel)
+                .environment(imageAssetViewModel)
         }
     }
 }

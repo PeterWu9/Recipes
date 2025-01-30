@@ -10,6 +10,7 @@ import Foundation
 // `NSCache` is thread-safe, ok to declare conformance to Sendable requirement without compiler enforcement
 public final class NSCacheContainer: @unchecked Sendable, CacheProtocol {
     private let cache = NSCache<NSURL, NSData>()
+    public init() { }
     public func item(for key: NSURL) -> NSData? {
         cache.object(forKey: key)
     }

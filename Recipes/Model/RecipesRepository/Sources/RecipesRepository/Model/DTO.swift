@@ -12,12 +12,13 @@ struct RecipesResponseDTO: Sendable, Decodable {
 }
 
 struct RecipeDTO: Sendable, Decodable {
-    let cuisine, name: String
-    let photoURLLarge: String?
-    let photoURLSmall: String?
+    let cuisine: String
+    let name: String
+    let photoUrlLarge: String?
+    let photoUrlSmall: String?
     let uuid: String
-    let sourceURL: String?
-    let youtubeURL: String?
+    let sourceUrl: String?
+    let youtubeUrl: String?
 }
 
 extension RecipeDTO: Identifiable {

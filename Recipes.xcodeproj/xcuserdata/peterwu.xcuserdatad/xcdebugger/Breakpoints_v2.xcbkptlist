@@ -3,4 +3,96 @@
    uuid = "D5743430-A7D4-4EDC-840F-8B250C31754B"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "87A0B8D5-E0CF-47B4-AD8E-BD9768D842A5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Recipes/Model/RecipesRepository/Sources/RecipesRepository/Model/Recipe.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3432E439-9724-48C7-9936-B6B7CCF75126"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Recipes/Model/RecipesRepository/Sources/RecipesRepository/RemoteRecipesRepository.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "fetchAllRecipes()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3432E439-9724-48C7-9936-B6B7CCF75126 - 1e1c16963d11e51e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for RecipesRepository.RemoteRecipesRepository.fetchAllRecipes() async throws -&gt; Swift.Array&lt;RecipesRepository.Recipe&gt;"
+                  moduleName = "Recipes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/peterwu/Developer/recipes/Recipes/Model/RecipesRepository/Sources/RecipesRepository/RemoteRecipesRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38">
+               </Location>
+               <Location
+                  uuid = "3432E439-9724-48C7-9936-B6B7CCF75126 - af0b09b645d504b6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "implicit closure #1 (RecipesRepository.RecipeDTO) -&gt; RecipesRepository.Recipe in RecipesRepository.RemoteRecipesRepository.fetchAllRecipes() async throws -&gt; Swift.Array&lt;RecipesRepository.Recipe&gt;"
+                  moduleName = "Recipes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/peterwu/Developer/recipes/Recipes/Model/RecipesRepository/Sources/RecipesRepository/RemoteRecipesRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38">
+               </Location>
+               <Location
+                  uuid = "3432E439-9724-48C7-9936-B6B7CCF75126 - 1e1c16963d11e5d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for RecipesRepository.RemoteRecipesRepository.fetchAllRecipes() async throws -&gt; Swift.Array&lt;RecipesRepository.Recipe&gt;"
+                  moduleName = "Recipes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/peterwu/Developer/recipes/Recipes/Model/RecipesRepository/Sources/RecipesRepository/RemoteRecipesRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40">
+               </Location>
+               <Location
+                  uuid = "3432E439-9724-48C7-9936-B6B7CCF75126 - af0b09b645d50478"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "implicit closure #1 (RecipesRepository.RecipeDTO) -&gt; RecipesRepository.Recipe in RecipesRepository.RemoteRecipesRepository.fetchAllRecipes() async throws -&gt; Swift.Array&lt;RecipesRepository.Recipe&gt;"
+                  moduleName = "Recipes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/peterwu/Developer/recipes/Recipes/Model/RecipesRepository/Sources/RecipesRepository/RemoteRecipesRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

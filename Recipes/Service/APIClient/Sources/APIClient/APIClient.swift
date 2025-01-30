@@ -12,12 +12,13 @@ public final class APIClient: Sendable {
     private let host: String
     private let session: URLSession
     
-    private let decoder = JSONDecoder()
+    private let decoder: JSONDecoder
         
     public init(
         session: URLSession = .shared,
         scheme: String = "https",
-        host: String
+        host: String,
+        decoder: JSONDecoder = JSONDecoder()
     ) {
         self.scheme = scheme
         self.host = host
@@ -28,8 +29,9 @@ public final class APIClient: Sendable {
             components.host = host
             return components
         }()
+        self.decoder = decoder
     }
-    
+        
     public func fetch<T: Sendable & Decodable>(path: String, headers: [String: String]? = nil, queries: [String: String]? = nil) async throws -> T {
         // TODO: separate concerns on components / request / response parsing
         // Adds query items and path to url component
@@ -64,22 +66,26 @@ public final class APIClient: Sendable {
         let statusCode = response.statusCode
         switch statusCode {
         case (200..<300):
-            // proceed to decode data
-            do {
-                return try decoder.decode(T.self, from: data)
-            } catch let error as DecodingError {
-                throw APIError
-                    .errorDecoding(
-                        data: data,
-                        description: error.localizedDescription,
-                        error: error
-                    )
-            } catch {
-                throw error
-            }
+            return try decode(data)
         default:
             // TODO: Handle error
             throw APIError.responseError(statusCode: statusCode, data: data)
+        }
+    }
+    
+    private func decode<T: Decodable>(_ data: Data) throws -> T {
+        // proceed to decode data
+        do {
+            return try decoder.decode(T.self, from: data)
+        } catch let error as DecodingError {
+            throw APIError
+                .errorDecoding(
+                    data: data,
+                    description: error.localizedDescription,
+                    error: error
+                )
+        } catch {
+            throw error
         }
     }
 }

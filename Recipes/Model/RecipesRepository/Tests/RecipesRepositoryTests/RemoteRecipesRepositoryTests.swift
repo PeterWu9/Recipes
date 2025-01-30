@@ -15,6 +15,16 @@ struct RemoteRecipesRepositoryTests {
         #expect(!recipes.isEmpty)
     }
     
+    @Test func decodeRecipePhotoUrl() async throws {
+        let repository = RemoteRecipesRepository.allRecipes
+        let malaysianRecipe = try await #require(
+            repository
+                .fetchAllRecipes()
+                .first { $0.cuisine == .known(.malaysian)}
+        )
+        #expect(malaysianRecipe.photoUrl != nil)
+    }
+    
     @Test func malformedRecipesData() async throws {
         let repository = RemoteRecipesRepository.malFormed
         await #expect(throws: RemoteRecipesRepository.RemoteRecipesError.self, performing: {
