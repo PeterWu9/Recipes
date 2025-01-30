@@ -11,16 +11,15 @@ import UIKit
 /// introduced
 public actor BundleImageLoader: ImageLoaderProtocol {
     // Max loading time in seconds
-    private(set) var maxLoadingTime: Int
-    private let cache: UIImageDictionaryContainer
-    public init(cache: UIImageDictionaryContainer) {
+    public var maxLoadingTime: Int = 5
+    private let cache: any CacheProtocol
+    public init(cache: any CacheProtocol) {
         self.cache = cache
-        self.maxLoadingTime = 5
     }
     
-    public init(maxLoadingTime: Int = 5) {
+    public init(maxLoadingTime: Int, cache: any CacheProtocol) {
         self.maxLoadingTime = maxLoadingTime
-        self.cache = UIImageDictionaryContainer()
+        self.cache = cache
     }
     
     public func fetch(_ url: String) async throws -> (String, Data) {
@@ -32,12 +31,13 @@ public actor BundleImageLoader: ImageLoaderProtocol {
             throw ImageLoaderError.invalidUrl(url)
         }
         
-        if let imageData = cache.item(for: url)?.pngData() {
+        if let imageData = cache.item(for: url) {
             return (url, imageData)
         } else {
             try await Task.sleep(for: .seconds(maxLoadingTime))
-            cache.set(image, for: url)
-            return (url, image.pngData()!)
+            let data = image.pngData()!
+            cache.set(data, for: url)
+            return (url, data)
         }
     }
 }

@@ -4,12 +4,12 @@
 //
 //  Created by Peter Wu on 1/29/25.
 //
+import Foundation
 
 public protocol CacheProtocol: Sendable {
-    associatedtype Key: Hashable
-    associatedtype Value
-    func item(for key: Key) -> Value?
-    func set(_ item: Value, for key: Key)
-    func removeItem(for key: Key)
+    init()
+    func item(for key: String) -> Data?
+    func set(_ item: Data, for key: String)
+    func removeItem(for key: String)
     func removeAll()
 }

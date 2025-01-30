@@ -10,14 +10,10 @@ import Foundation
 import Testing
 
 struct ImageLoaderConcurrencyTests {
-    let cache: UIImageDictionaryContainer
-    let loader: BundleImageLoader
+//    let cache: UIImageDictionaryContainer
+    let loader = BundleImageLoader(cache: InMemoryCache())
     let imageFileNames: [String] = (1...100).map { "UIImage_\($0)" }
     
-    init() {
-        cache = .init()
-        loader = .init(cache: cache)
-    }
 
     @Test func parallelLoadingImages() async throws {
         let imageData = try await withThrowingTaskGroup(of: (String, Data).self) { group in

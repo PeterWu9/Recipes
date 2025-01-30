@@ -54,7 +54,10 @@ struct MalformedPreviewData: PreviewModifier {
 struct BundleImageAssetPreviewData: PreviewModifier {
     static func makeSharedContext() async throws -> ImageAssetViewModel {
         .init(
-            imageService: BundleImageLoader(maxLoadingTime: 1)
+            imageService: BundleImageLoader(
+                maxLoadingTime: 1,
+                cache: InMemoryCache()
+            )
         )
     }
     func body(content: Content, context: ImageAssetViewModel) -> some View {

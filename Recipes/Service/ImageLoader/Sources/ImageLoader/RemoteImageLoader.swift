@@ -8,24 +8,24 @@
 import Foundation
 
 public actor RemoteImageLoader: ImageLoaderProtocol {
-    private let cache: NSCacheContainer
+    private let cache: any CacheProtocol
     
-    public init(cache: NSCacheContainer) {
+    public init(cache: any CacheProtocol) {
         self.cache = cache
     }
     public func fetch(_ url: String) async throws -> (String, Data) {
         // check if we have image data in cache
-        guard let url = URL(string: url) else {
+        guard let unwrappedUrl = URL(string: url) else {
             throw ImageLoaderError.invalidUrl(url)
         }
-        if let imageData = cache.item(for: url as NSURL){
+        if let imageData = cache.item(for: url) {
             #if DEBUG
-            print("\(url) retrieved from cache")
+            print("\(unwrappedUrl) retrieved from cache")
             #endif
-            return (url.absoluteString, imageData as Data)
+            return (unwrappedUrl.absoluteString, imageData)
         } else {
             // download data
-            let (data, response) = try await URLSession.shared.data(for: .init(url: url))
+            let (data, response) = try await URLSession.shared.data(for: .init(url: unwrappedUrl))
             guard let response = response as? HTTPURLResponse,
                     (200..<300).contains(
                 response.statusCode
@@ -33,12 +33,12 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
                 throw ImageLoaderError.invalidServerResponse(response)
             }
             // cache data
-            cache.set(data as NSData, for: url as NSURL)
+            cache.set(data, for: url)
             // return data
             #if DEBUG
-            print("\(url) downloaded and saved to cache")
+            print("\(unwrappedUrl) downloaded and saved to cache")
             #endif
-            return (url.absoluteString, data)
+            return (unwrappedUrl.absoluteString, data)
         }
     }
 }

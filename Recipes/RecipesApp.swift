@@ -19,7 +19,7 @@ struct RecipesApp: App {
             .allRecipes)
     #endif
     @State private var imageAssetViewModel = ImageAssetViewModel(
-        imageService: RemoteImageLoader(cache: .init())
+        imageService: RemoteImageLoader(cache: InMemoryCache())
     )
     
     var body: some Scene {
