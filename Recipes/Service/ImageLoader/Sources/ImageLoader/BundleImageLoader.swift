@@ -12,15 +12,15 @@ import UIKit
 public actor BundleImageLoader: ImageLoaderProtocol {
     // Max loading time in seconds
     private(set) var maxLoadingTime: Int
-    private let cache: UIIMageDictionaryContainer
-    public init(cache: UIIMageDictionaryContainer) {
+    private let cache: UIImageDictionaryContainer
+    public init(cache: UIImageDictionaryContainer) {
         self.cache = cache
         self.maxLoadingTime = 5
     }
     
     public init(maxLoadingTime: Int = 5) {
         self.maxLoadingTime = maxLoadingTime
-        self.cache = UIIMageDictionaryContainer()
+        self.cache = UIImageDictionaryContainer()
     }
     
     public func fetch(_ url: String) async throws -> (String, Data) {

@@ -39,68 +39,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "264E2106-6D6A-48D9-93B1-B175C3315201"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Recipes/Model/RecipesRepository/Tests/RecipesRepositoryTests/RemoteRecipesRepositoryTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "decodeRecipePhotoUrl()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "264E2106-6D6A-48D9-93B1-B175C3315201 - 4e5805930cd0321b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for RecipesRepositoryTests.RemoteRecipesRepositoryTests.decodeRecipePhotoUrl() async throws -&gt; ()"
-                  moduleName = "RecipesRepositoryTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peterwu/Developer/recipes/Recipes/Model/RecipesRepository/Tests/RecipesRepositoryTests/RemoteRecipesRepositoryTests.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26">
-               </Location>
-               <Location
-                  uuid = "264E2106-6D6A-48D9-93B1-B175C3315201 - d68dc5dbdc515038"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for RecipesRepositoryTests.RemoteRecipesRepositoryTests.decodeRecipePhotoUrl() async throws -&gt; ()"
-                  moduleName = "RecipesRepositoryTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peterwu/Developer/recipes/Recipes/Model/RecipesRepository/Tests/RecipesRepositoryTests/RemoteRecipesRepositoryTests.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E0FCAD99-268E-4248-8BFE-635285D091D9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Recipes/Model/RecipesRepository/Tests/RecipesRepositoryTests/RemoteRecipesRepositoryTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "decodeRecipePhotoUrl()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "4149542A-583A-4191-B813-80CF2E174D41"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -112,36 +50,6 @@
             endingLineNumber = "43"
             landmarkName = "init(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "4149542A-583A-4191-B813-80CF2E174D41 - f20b50aa5464a685"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RecipesRepository.Recipe.CuisineType.init(Swift.String) -&gt; RecipesRepository.Recipe.CuisineType"
-                  moduleName = "RecipesRepositoryTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peterwu/Developer/recipes/Recipes/Model/RecipesRepository/Sources/RecipesRepository/Model/Recipe.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43">
-               </Location>
-               <Location
-                  uuid = "4149542A-583A-4191-B813-80CF2E174D41 - f20b50aa5464a685"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "RecipesRepository.Recipe.CuisineType.init(Swift.String) -&gt; RecipesRepository.Recipe.CuisineType"
-                  moduleName = "RecipesRepositoryTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/peterwu/Developer/recipes/Recipes/Model/RecipesRepository/Sources/RecipesRepository/Model/Recipe.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -1,5 +1,5 @@
 //
-//  UIIMageDictionaryContainer.swift
+//  UIImageDictionaryContainer.swift
 //  ImageLoader
 //
 //  Created by Peter Wu on 1/29/25.
@@ -8,7 +8,7 @@
 import UIKit
 import Synchronization
 
-public final class UIIMageDictionaryContainer: CacheProtocol {
+public final class UIImageDictionaryContainer: CacheProtocol {
     let lock = Mutex<[String: UIImage]>([:])
     public init() { }
     
