@@ -5,7 +5,7 @@
 //  Created by Peter Wu on 1/29/25.
 //
 
-
+import Cache
 import UIKit
 /// Simulates downloading data from network by loading from Bundle, with random loading time delay
 /// introduced

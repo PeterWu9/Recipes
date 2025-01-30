@@ -10,6 +10,7 @@
 		F914E5BC2D406DD00078FD51 /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = F914E5BB2D406DD00078FD51 /* APIClient */; };
 		F914E6722D44C88E0078FD51 /* RecipesRepository in Frameworks */ = {isa = PBXBuildFile; productRef = F914E6712D44C88E0078FD51 /* RecipesRepository */; };
 		F93880932D4AF0F60028A563 /* ImageLoader in Frameworks */ = {isa = PBXBuildFile; productRef = F93880922D4AF0F60028A563 /* ImageLoader */; };
+		F938809A2D4BE4050028A563 /* Cache in Frameworks */ = {isa = PBXBuildFile; productRef = F93880992D4BE4050028A563 /* Cache */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Service/APIClient,
+				Service/Cache,
 				Service/ImageLoader,
 			);
 			target = F914E5702D402F350078FD51 /* Recipes */;
@@ -60,6 +62,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F914E6722D44C88E0078FD51 /* RecipesRepository in Frameworks */,
+				F938809A2D4BE4050028A563 /* Cache in Frameworks */,
 				F93880932D4AF0F60028A563 /* ImageLoader in Frameworks */,
 				F914E5BC2D406DD00078FD51 /* APIClient in Frameworks */,
 			);
@@ -124,6 +127,7 @@
 				F914E5BB2D406DD00078FD51 /* APIClient */,
 				F914E6712D44C88E0078FD51 /* RecipesRepository */,
 				F93880922D4AF0F60028A563 /* ImageLoader */,
+				F93880992D4BE4050028A563 /* Cache */,
 			);
 			productName = recipes;
 			productReference = F914E5712D402F350078FD51 /* Recipes.app */;
@@ -521,6 +525,10 @@
 		F93880922D4AF0F60028A563 /* ImageLoader */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ImageLoader;
+		};
+		F93880992D4BE4050028A563 /* Cache */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Cache;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

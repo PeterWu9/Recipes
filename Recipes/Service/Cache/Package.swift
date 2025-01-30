@@ -4,26 +4,21 @@
 import PackageDescription
 
 let package = Package(
-    name: "ImageLoader",
-    platforms: [.iOS(.v18)],
+    name: "Cache",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "ImageLoader",
-            targets: ["ImageLoader"]),
+            name: "Cache",
+            targets: ["Cache"]),
     ],
-    dependencies: [.package(name: "Cache", path: "../Service/Cache")],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ImageLoader",
-            dependencies: ["Cache"],
-            resources: [.process("Resources/Media.xcassets")]
-        ),
+            name: "Cache"),
         .testTarget(
-            name: "ImageLoaderTests",
-            dependencies: ["ImageLoader", "Cache"]
+            name: "CacheTests",
+            dependencies: ["Cache"]
         ),
     ]
 )

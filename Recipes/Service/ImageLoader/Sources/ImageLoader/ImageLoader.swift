@@ -1,3 +1,4 @@
+import Cache
 import Foundation
 
 public protocol ImageLoaderProtocol: Sendable {

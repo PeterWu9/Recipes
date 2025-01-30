@@ -5,6 +5,7 @@
 //  Created by Peter Wu on 1/29/25.
 //
 
+import Cache
 import Foundation
 
 public actor RemoteImageLoader: ImageLoaderProtocol {

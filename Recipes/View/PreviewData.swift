@@ -5,6 +5,7 @@
 //  Created by Peter Wu on 1/27/25.
 //
 
+import Cache
 import ImageLoader
 import RecipesRepository
 import SwiftUI

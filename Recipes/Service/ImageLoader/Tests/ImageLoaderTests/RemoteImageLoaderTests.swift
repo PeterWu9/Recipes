@@ -4,6 +4,8 @@
 //
 //  Created by Peter Wu on 1/29/25.
 //
+
+@testable import Cache
 @testable import ImageLoader
 import Foundation
 import Testing
