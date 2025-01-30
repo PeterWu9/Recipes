@@ -26,6 +26,8 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
         } else {
             // download data
             let (data, response) = try await URLSession.shared.data(for: .init(url: unwrappedUrl))
+            
+            // TODO: actor reentrancy
             guard let response = response as? HTTPURLResponse,
                     (200..<300).contains(
                 response.statusCode
