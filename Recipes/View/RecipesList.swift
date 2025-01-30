@@ -18,7 +18,9 @@ struct RecipesList: View {
     }
 }
 
-#Preview(traits: .modifier(AllRecipesPreviewData())) {
+#Preview(
+    traits: .modifier(AllRecipesPreviewData()), .modifier(BundleImageAssetPreviewData())
+) {
     AllRecipesPreviewContainer { recipes in
         ScrollView {
             RecipesList(recipes: recipes)

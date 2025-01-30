@@ -60,14 +60,25 @@ extension CGFloat {
     static let bottomPadding: Self = 200
 }
 
-#Preview(traits: .modifier(AllRecipesPreviewData())) {
+#Preview(
+    traits: .modifier(AllRecipesPreviewData()),
+    .modifier(BundleImageAssetPreviewData())
+) {
     ContentView()
 }
 
-#Preview("Empty", traits: .modifier(EmptyPreviewData())) {
+#Preview(
+    "Empty",
+    traits: .modifier(EmptyPreviewData()),
+    .modifier(BundleImageAssetPreviewData())
+) {
     ContentView()
 }
 
-#Preview("Malformed", traits: .modifier(MalformedPreviewData())) {
+#Preview(
+    "Malformed",
+    traits: .modifier(MalformedPreviewData()),
+    .modifier(BundleImageAssetPreviewData())
+) {
     ContentView()
 }
