@@ -7,6 +7,8 @@
 import Foundation
 
 public protocol CacheProtocol<Key, Value>: Sendable {
+    // TODO: Memory size
+    // TODO: Cache eviction
     associatedtype Key: Hashable
     associatedtype Value: Codable
     func item(for key: Key) -> Value?
