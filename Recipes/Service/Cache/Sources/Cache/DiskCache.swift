@@ -41,7 +41,7 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
     public func item(for key: String) -> Data? {
         print(#function, key)
         do {
-            return try Data(contentsOf: url(for: key))
+            return try Data(contentsOf: fileUrl(for: key))
         } catch {
             print(
                 "Unable to retrieve data for \(key) from \(appCacheDirectory.absoluteString) due to \(error.localizedDescription)"
@@ -52,7 +52,7 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
 
     public func set(_ item: Data, for key: String) {
         print(#function, key)
-        let url = url(for: key)
+        let url = fileUrl(for: key)
         do {
             try item.write(to: url, options: .atomic)
         } catch {
@@ -63,7 +63,7 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
     public func removeItem(for key: String) {
         print(#function, key)
         do {
-            try fileManager.removeItem(at: url(for: key))
+            try fileManager.removeItem(at: fileUrl(for: key))
         } catch {
             print(
                 "Unable to remove data for \(key) from \(appCacheDirectory.absoluteString) due to \(error.localizedDescription)"
@@ -74,15 +74,18 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
     public func removeAll() {
         print(#function)
         do {
-            try fileManager.removeItem(at: appCacheDirectory)
+            let contents = try fileManager.contentsOfDirectory(atPath: appCacheDirectory.path())
+            for content in contents {
+                try fileManager.removeItem(atPath: content)
+            }
         } catch {
             print(
-                "Unable to remove directory \(appCacheDirectory.absoluteString) due to \(error.localizedDescription)"
+                "Unable to remove files in directory \(appCacheDirectory.absoluteString) due to \(error.localizedDescription)"
             )
         }
     }
     
-    private func url(for key: String) -> URL {
-        appCacheDirectory.appending(path: key)
+    private func fileUrl(for key: String) -> URL {
+        appCacheDirectory.appending(path: key, directoryHint: .notDirectory)
     }
 }
