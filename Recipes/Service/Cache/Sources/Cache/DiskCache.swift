@@ -14,6 +14,7 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
     private let appCacheDirectory: URL
     
     public init(fileManager: FileManager = .default, directoryName: String) throws {
+        // TODO: Separate module for File IO
         self.fileManager = fileManager
         let cacheDirectoryUrl = try fileManager.url(
             for: .cachesDirectory,
