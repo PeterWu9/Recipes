@@ -19,10 +19,12 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
         guard let unwrappedUrl = URL(string: url) else {
             throw ImageLoaderError.invalidUrl(url)
         }
-        if let imageData = cache.item(for: url) {
-            #if DEBUG
-            print("\(unwrappedUrl) retrieved from cache")
-            #endif
+        
+        if let fileName = fileName(from: unwrappedUrl),
+           let imageData = cache.item(for: fileName) {
+#if DEBUG
+            print("\(unwrappedUrl) retrieved from cache, under \(fileName)")
+#endif
             return (unwrappedUrl.absoluteString, imageData)
         } else {
             // download data
@@ -30,18 +32,29 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
             
             // TODO: actor reentrancy
             guard let response = response as? HTTPURLResponse,
-                    (200..<300).contains(
-                response.statusCode
-            ) else {
+                  (200..<300).contains(
+                    response.statusCode
+                  ) else {
                 throw ImageLoaderError.invalidServerResponse(response)
             }
+#if DEBUG
+            print("\(unwrappedUrl) downloaded")
+#endif
             // cache data
-            cache.set(data, for: url)
-            // return data
-            #if DEBUG
-            print("\(unwrappedUrl) downloaded and saved to cache")
-            #endif
+            if let fileName = fileName(from: unwrappedUrl) {
+                cache.set(data, for: fileName)
+#if DEBUG
+                print("\(unwrappedUrl) saved to cache, under \(fileName)")
+#endif
+            }
             return (unwrappedUrl.absoluteString, data)
         }
+    }
+    
+    private func fileName(from url: URL) -> String? {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+        return components.path.replacingOccurrences(of: "/", with: "@")
     }
 }

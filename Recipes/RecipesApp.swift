@@ -20,7 +20,9 @@ struct RecipesApp: App {
             .allRecipes)
     #endif
     @State private var imageAssetViewModel = ImageAssetViewModel(
-        imageService: RemoteImageLoader(cache: InMemoryCache())
+        imageService: RemoteImageLoader(
+            cache: try! DiskCache(directoryName: Bundle.main.bundleIdentifier ?? "com.peterwu.recipes")
+        )
     )
     
     var body: some Scene {
