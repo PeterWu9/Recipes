@@ -74,9 +74,19 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
     public func removeAll() {
         print(#function)
         do {
-            let contents = try fileManager.contentsOfDirectory(atPath: appCacheDirectory.path())
-            for content in contents {
-                try fileManager.removeItem(atPath: content)
+            let fileUrls = try fileManager.contentsOfDirectory(
+                at: appCacheDirectory,
+                includingPropertiesForKeys: []
+            )
+            for url in fileUrls {
+                do {
+                    try fileManager.removeItem(at: url)
+                } catch {
+                    print(
+                        "Unable to remove files in directory \(appCacheDirectory.absoluteString) due to \(error.localizedDescription)"
+                    )
+                    continue
+                }
             }
         } catch {
             print(
