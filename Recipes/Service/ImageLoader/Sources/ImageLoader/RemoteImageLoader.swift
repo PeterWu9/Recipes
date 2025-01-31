@@ -22,9 +22,7 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
         
         if let fileName = fileName(from: unwrappedUrl),
            let imageData = cache.item(for: fileName) {
-#if DEBUG
             print("\(unwrappedUrl) retrieved from cache, under \(fileName)")
-#endif
             return (unwrappedUrl.absoluteString, imageData)
         } else {
             // download data
@@ -37,15 +35,11 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
                   ) else {
                 throw ImageLoaderError.invalidServerResponse(response)
             }
-#if DEBUG
             print("\(unwrappedUrl) downloaded")
-#endif
             // cache data
             if let fileName = fileName(from: unwrappedUrl) {
                 cache.set(data, for: fileName)
-#if DEBUG
                 print("\(unwrappedUrl) saved to cache, under \(fileName)")
-#endif
             }
             return (unwrappedUrl.absoluteString, data)
         }

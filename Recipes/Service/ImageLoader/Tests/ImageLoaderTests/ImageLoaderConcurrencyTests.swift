@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 struct ImageLoaderConcurrencyTests {
-//    let cache: UIImageDictionaryContainer
     let loader = BundleImageLoader(cache: InMemoryCache())
     let imageFileNames: [String] = (1...100).map { "UIImage_\($0)" }
     
