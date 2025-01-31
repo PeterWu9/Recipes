@@ -68,7 +68,6 @@ public final class APIClient: Sendable {
         case (200..<300):
             return try decode(data)
         default:
-            // TODO: Handle error
             throw APIError.responseError(statusCode: statusCode, data: data)
         }
     }
