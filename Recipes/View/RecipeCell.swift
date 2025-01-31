@@ -12,11 +12,12 @@ struct RecipeCell: View {
     @State private var imageResult: ImageAssetViewModel.ImageResult?
     
     var body: some View {
-        HStack(alignment: .center) {
+        HStack(alignment: .top) {
             Group {
                 switch imageResult {
                 case .loaded(let uIImage):
                     Image(uiImage: uIImage)
+                        .resizable()
                         .aspectRatio(contentMode: .fill)
                 case .withError:
                     RoundedRectangle(cornerRadius: 8)
@@ -27,13 +28,19 @@ struct RecipeCell: View {
                 }
             }
             .frame(width: 100, height: 100)
-            .clipped()
+            .clipShape(RoundedRectangle(cornerRadius: 8))
             VStack(alignment: .leading) {
                 Text(data.name)
                     .font(.headline)
-                Text(data.cuisineName)
-                    .font(.subheadline)
-                    .foregroundStyle(.brown)
+                    .lineLimit(3)
+                    .padding(.bottom, 4)
+                HStack {
+                    Image(systemName: "globe")
+                        .foregroundStyle(.cyan)
+                    Text(data.cuisineName)
+                        .font(.subheadline)
+                        .foregroundStyle(.brown)
+                }
             }
         }
         .task {
