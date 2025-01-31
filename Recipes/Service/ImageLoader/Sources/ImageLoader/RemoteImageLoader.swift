@@ -9,9 +9,9 @@ import Cache
 import Foundation
 
 public actor RemoteImageLoader: ImageLoaderProtocol {
-    private let cache: any CacheProtocol
+    private let cache: any CacheProtocol<String, Data>
     
-    public init(cache: any CacheProtocol) {
+    public init(cache: any CacheProtocol<String, Data>) {
         self.cache = cache
     }
     public func fetch(_ url: String) async throws -> (String, Data) {

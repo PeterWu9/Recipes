@@ -6,10 +6,11 @@
 //
 import Foundation
 
-public protocol CacheProtocol: Sendable {
-    init()
-    func item(for key: String) -> Data?
-    func set(_ item: Data, for key: String)
-    func removeItem(for key: String)
+public protocol CacheProtocol<Key, Value>: Sendable {
+    associatedtype Key: Hashable
+    associatedtype Value: Codable
+    func item(for key: Key) -> Value?
+    func set(_ item: Value, for key: Key)
+    func removeItem(for key: Key)
     func removeAll()
 }

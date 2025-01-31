@@ -12,12 +12,12 @@ import UIKit
 public actor BundleImageLoader: ImageLoaderProtocol {
     // Max loading time in seconds
     public var maxLoadingTime: Int = 5
-    private let cache: any CacheProtocol
-    public init(cache: any CacheProtocol) {
+    private let cache: any CacheProtocol<String, Data>
+    public init(cache: any CacheProtocol<String, Data>) {
         self.cache = cache
     }
     
-    public init(maxLoadingTime: Int, cache: any CacheProtocol) {
+    public init(maxLoadingTime: Int, cache: any CacheProtocol<String, Data>) {
         self.maxLoadingTime = maxLoadingTime
         self.cache = cache
     }
