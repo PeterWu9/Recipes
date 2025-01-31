@@ -70,7 +70,7 @@ public final class RemoteRecipesRepository: RecipesRepository {
 
 extension RemoteRecipesRepository {
     public static var defaultHost: String { "d3jbb8n5wk0qxi.cloudfront.net" }
-    public static var allRecipesNoCache: RemoteRecipesRepository {
+    public static var allRecipesNoHttpCache: RemoteRecipesRepository {
         .init(
             host: defaultHost,
             recipesPath: "recipes.json",

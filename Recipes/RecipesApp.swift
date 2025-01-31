@@ -13,7 +13,7 @@ import SwiftUI
 @main
 struct RecipesApp: App {
     #if DEBUG
-    @State private var viewModel = ViewModel(repository: RemoteRecipesRepository.allRecipesNoCache)
+    @State private var viewModel = ViewModel(repository: RemoteRecipesRepository.allRecipesNoHttpCache)
     #else
     @State private var viewModel = ViewModel(
         repository: RemoteRecipesRepository
