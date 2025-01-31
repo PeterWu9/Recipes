@@ -18,12 +18,20 @@ struct DiskCacheTests {
         cache = try! .init(fileManager: fileManager, directoryName: "DiskCacheTest")
     }
     
-    @Test func cacheItem() async throws {
+    @Test("Cache item", arguments: ["TestItem.txt"])
+    func cacheItem(item: String) throws {
         cache.removeAll()
-        let item = "TestItem.txt"
         let itemData = try #require(item.data(using: .utf8))
         cache.set(itemData, for: item)
         let data = try #require(cache.item(for: item))
         #expect(itemData == data)
+    }
+    
+    @Test func removeItem() throws {
+        cache.removeAll()
+        let testItemToRemove = "TestItemToRemove.txt"
+        try cacheItem(item: testItemToRemove)
+        cache.removeItem(for: testItemToRemove)
+        #expect(cache.item(for: testItemToRemove) == nil)
     }
 }
