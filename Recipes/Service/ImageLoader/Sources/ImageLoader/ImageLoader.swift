@@ -2,7 +2,6 @@ import Cache
 import Foundation
 
 public protocol ImageLoaderProtocol: Sendable {
-    init(cache: any CacheProtocol)
     /// Fetches image from a given url string, and returns `Data` that could be used to reconstruct an image
     func fetch(_ url: String) async throws -> (String, Data)
     /*
