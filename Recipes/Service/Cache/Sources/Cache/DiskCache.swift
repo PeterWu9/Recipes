@@ -44,7 +44,7 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
             return try Data(contentsOf: url(for: key))
         } catch {
             print(
-                "Unable to retrieve data for \(key) from \(appCacheDirectory.absoluteString)"
+                "Unable to retrieve data for \(key) from \(appCacheDirectory.absoluteString) due to \(error.localizedDescription)"
             )
             return nil
         }
@@ -56,7 +56,7 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
         do {
             try item.write(to: url, options: .atomic)
         } catch {
-            print("Unable to write data to \(url.path())")
+            print("Unable to write data to \(url.path()) due to \(error.localizedDescription)")
         }
     }
 
@@ -66,7 +66,7 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
             try fileManager.removeItem(at: url(for: key))
         } catch {
             print(
-                "Unable to remove data for \(key) from \(appCacheDirectory.absoluteString)"
+                "Unable to remove data for \(key) from \(appCacheDirectory.absoluteString) due to \(error.localizedDescription)"
             )
         }
     }
@@ -77,7 +77,7 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
             try fileManager.removeItem(at: appCacheDirectory)
         } catch {
             print(
-                "Unable to remove directory \(appCacheDirectory.absoluteString)"
+                "Unable to remove directory \(appCacheDirectory.absoluteString) due to \(error.localizedDescription)"
             )
         }
     }
