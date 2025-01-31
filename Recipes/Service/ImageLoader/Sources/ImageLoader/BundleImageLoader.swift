@@ -8,9 +8,9 @@
 import Cache
 import UIKit
 /// Simulates downloading data from network by loading from Bundle, with random loading time delay
-/// introduced
+/// introduced for testing purposes
 public actor BundleImageLoader: ImageLoaderProtocol {
-    // Max loading time in seconds
+    /// Max loading time in seconds
     public var maxLoadingTime: Int = 5
     private let cache: any CacheProtocol<String, Data>
     public init(cache: any CacheProtocol<String, Data>) {
