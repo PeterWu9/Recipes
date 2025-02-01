@@ -12,21 +12,26 @@ import UIKit
 public actor RemoteImageLoader: ImageLoaderProtocol {
     private let cache: any CacheProtocol<String, Data>
     private let transform: (Data) throws -> UIImage
-    
+        
     public init(
-        transform: @escaping @Sendable (
-            Data
-        ) throws -> UIImage = RemoteImageLoader.transform
+        transform: @escaping @Sendable (Data) throws -> UIImage = RemoteImageLoader.transform
     ) {
         self.cache = InMemoryCache()
         self.transform = transform
     }
 
-    public init(cache: any CacheProtocol<String, Data>) {
+    public init(
+        cache: any CacheProtocol<String, Data>,
+        transform: @escaping @Sendable (Data) throws -> UIImage = RemoteImageLoader.transform
+    ) {
         self.cache = cache
-        transform = RemoteImageLoader.transform
+        self.transform = transform
     }
     
+    
+    /// Fetches an image from URL
+    /// - Parameter url: URL of the image resource
+    /// - Returns: The fetched image and the url source
     public func fetch(_ url: String) async throws -> (String, UIImage) {
         // check if we have image data in cache
         guard let unwrappedUrl = URL(string: url) else {
@@ -60,6 +65,10 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
         }
     }
     
+    
+    /// Parses file name from URL.  The parser replaces `/` character with `@` character to avoid conflict when caching in file system
+    /// - Parameter url: URL for the image resource
+    /// - Returns: File name extracted from the URL, if successfully parsed
     public static func fileName(from url: URL) -> String? {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return nil
