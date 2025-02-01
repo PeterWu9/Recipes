@@ -13,22 +13,9 @@ struct RecipeCell: View {
     
     var body: some View {
         HStack(alignment: .top) {
-            Group {
-                switch imageResult {
-                case .success(let image):
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                case .failure:
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(.red)
-                case nil:
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(.gray)
-                }
-            }
-            .frame(width: 100, height: 100)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+            cellImage
+                .frame(width: 100, height: 100)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
             VStack(alignment: .leading) {
                 Text(data.name)
                     .font(.headline)
@@ -47,6 +34,21 @@ struct RecipeCell: View {
             if let imageUrl = data.imageUrl {
                 imageResult = await assetVm.fetchImage(by: imageUrl)
             }
+        }
+    }
+    
+    @ViewBuilder var cellImage: some View {
+        switch imageResult {
+        case .success(let image):
+            Image(uiImage: image)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        case .failure:
+            RoundedRectangle(cornerRadius: 8)
+                .fill(.red)
+        case nil:
+            RoundedRectangle(cornerRadius: 8)
+                .fill(.gray)
         }
     }
     
