@@ -9,17 +9,17 @@ import SwiftUI
 struct RecipeCell: View {
     @Environment(ImageAssetViewModel.self) private var assetVm
     let data: CellData
-    @State private var imageResult: ImageAssetViewModel.ImageResult?
+    @State private var imageResult: Result<UIImage, Error>?
     
     var body: some View {
         HStack(alignment: .top) {
             Group {
                 switch imageResult {
-                case .loaded(let uIImage):
-                    Image(uiImage: uIImage)
+                case .success(let image):
+                    Image(uiImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                case .withError:
+                case .failure:
                     RoundedRectangle(cornerRadius: 8)
                         .fill(.red)
                 case nil:

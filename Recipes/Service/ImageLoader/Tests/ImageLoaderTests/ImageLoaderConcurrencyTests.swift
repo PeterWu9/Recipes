@@ -9,6 +9,7 @@
 @testable import ImageLoader
 import Foundation
 import Testing
+import UIKit
 
 struct ImageLoaderConcurrencyTests {
     let loader = BundleImageLoader(cache: InMemoryCache())
@@ -16,22 +17,24 @@ struct ImageLoaderConcurrencyTests {
     
 
     @Test func parallelLoadingImages() async throws {
-        let imageData = try await withThrowingTaskGroup(of: (String, Data).self) { group in
-            var accumulated = [(String, Data)]()
+        let images = try await withThrowingTaskGroup(
+            of: (String, UIImage).self
+        ) { group in
+            var accumulated = [(String, UIImage)]()
             for name in imageFileNames {
                 group.addTask {
                     return try await loader.fetch(name)
                 }
             }
             
-            for try await data in group {
-                accumulated.append(data)
+            for try await image in group {
+                accumulated.append(image)
             }
             return accumulated
         }
         
-        #expect(imageData.count == 100)
-        let urls = Set(imageData.map { $0.0 })
+        #expect(images.count == 100)
+        let urls = Set(images.map { $0.0 })
         #expect(urls.count == 100)
     }
 

@@ -12,28 +12,19 @@ import UIKit
 @MainActor
 @Observable
 final class ImageAssetViewModel {
-    private let imageService: any ImageLoaderProtocol
+    private let imageService: any ImageLoaderProtocol<UIImage>
     
-    init(imageService: any ImageLoaderProtocol) {
+    init(imageService: any ImageLoaderProtocol<UIImage>) {
         self.imageService = imageService
     }
     
-    enum ImageResult {
-        case loaded(UIImage)
-        case withError(String)
-    }
-    
-    func fetchImage(by urlString: String) async -> ImageResult? {
+    func fetchImage(by urlString: String) async -> Result<UIImage, Error> {
         do {
-            let (_, data) = try await imageService.fetch(urlString)
-            guard let image = UIImage(data: data) else {
-                return ImageResult
-                    .withError("Unable to convert data to image")
-            }
-            return ImageResult.loaded(image)
+            let (_, image) = try await imageService.fetch(urlString)
+            return .success(image)
         } catch {
             // return placeholder
-            return ImageResult.withError(error.localizedDescription)
+            return .failure(error)
         }
     }
 }

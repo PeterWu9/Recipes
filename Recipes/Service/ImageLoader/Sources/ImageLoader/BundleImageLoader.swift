@@ -13,16 +13,30 @@ public actor BundleImageLoader: ImageLoaderProtocol {
     /// Max loading time in seconds
     public var maxLoadingTime: Int = 5
     private let cache: any CacheProtocol<String, Data>
-    public init(cache: any CacheProtocol<String, Data>) {
+    private var transform: (Data) throws -> UIImage
+    public init(transform: @escaping @Sendable (Data) throws -> UIImage) {
+        self.transform = transform
+        self.cache = InMemoryCache()
+    }
+    public init(
+        cache: any CacheProtocol<String, Data>,
+        transform: @escaping @Sendable (Data) throws -> UIImage = BundleImageLoader.transform
+    ) {
         self.cache = cache
+        self.transform = transform
     }
     
-    public init(maxLoadingTime: Int, cache: any CacheProtocol<String, Data>) {
+    public init(
+        maxLoadingTime: Int,
+        cache: any CacheProtocol<String, Data>,
+        transform: @escaping @Sendable (Data) throws -> UIImage = BundleImageLoader.transform
+    ) {
         self.maxLoadingTime = maxLoadingTime
         self.cache = cache
+        self.transform = transform
     }
     
-    public func fetch(_ url: String) async throws -> (String, Data) {
+    public func fetch(_ url: String) async throws -> (String, UIImage) {
         // check if we have image data in cache
         guard let image = UIImage(
             named: url,
@@ -32,12 +46,15 @@ public actor BundleImageLoader: ImageLoaderProtocol {
         }
         
         if let imageData = cache.item(for: url) {
-            return (url, imageData)
+            let image = try transform(imageData)
+            return (url, image)
         } else {
             try await Task.sleep(for: .seconds(maxLoadingTime))
             let data = image.pngData()!
+            let image = try transform(data)
             cache.set(data, for: url)
-            return (url, data)
+            return (url, image)
         }
     }
+    
 }
