@@ -9,55 +9,63 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(ViewModel.self) private var viewModel
+    @State private var refreshTask: Task<Void, Never>?
     
     var body: some View {
         NavigationStack {
-            VStack {
-                switch viewModel.loadingState {
-                case .none:
-                    EmptyView()
-                case .loading:
-                    ProgressView()
-                        .scaleEffect(2)
-                        .padding(.bottom, .bottomPadding)
-                case .loaded(let result):
-                    switch result {
-                    case .empty:
-                        ContentUnavailableView("No recipes are available.  Please try again later!", systemImage: "fork.knife.circle")
-                            .padding(.bottom, .bottomPadding)
-                    case .withLoad(let recipes):
-                        ScrollView {
-                            RecipesList(recipes: recipes)
-                                .padding()
-                                .ignoresSafeArea(edges: .bottom)
-                        }
-                    case .withError:
-                        ContentUnavailableView("We apologize.  We're running into some issues.  Please try again later!", systemImage: "exclamationmark.circle")
-                            .padding(.bottom, .bottomPadding)
+            ScrollView {
+                VStack {
+                    switch viewModel.loadingState {
+                    case .none:
+                        EmptyView()
+                    case .isLoading(let isInitial) where isInitial == true:
+                        ProgressView()
+                            .scaleEffect(2)
+                            .frame(minWidth: 200)
+                            .padding(.top, .topPadding)
+                    default:
+                        view(for: viewModel.loadingResult)
                     }
                 }
             }
             .navigationTitle("Recipes")
-            .task {
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        .refreshable(action: {
+            refreshTask = Task {
                 await viewModel.fetchAllRecipes()
             }
-        }
-        .overlay(alignment: .bottomTrailing, content: {
-            Button {
-                Task {
-                    await viewModel.fetchAllRecipes()
-                }
-            } label: {
-                Image(systemName: "arrow.clockwise.circle")
-                    .font(.largeTitle)
-            }
-            .padding([.bottom, .trailing], 40)
         })
+        .onDisappear {
+            refreshTask?.cancel()
+        }
+        .task {
+            await viewModel.fetchAllRecipes()
+        }
+    }
+    
+    @ViewBuilder func view(for loadingResult: Result<[RecipeCell.CellData], Error>?) -> some View {
+        switch viewModel.loadingResult {
+        case .success(let recipes):
+            if recipes.isEmpty {
+                ContentUnavailableView("No recipes are available.  Please try again later!", systemImage: "fork.knife.circle")
+                    .padding(.top, .topPadding)
+            } else {
+                RecipesList(recipes: recipes)
+                    .padding()
+                    .ignoresSafeArea(edges: .bottom)
+            }
+        case .failure:
+            ContentUnavailableView("We apologize.  We're running into some issues.  Please try again later!", systemImage: "exclamationmark.circle")
+                .padding(.top, .topPadding)
+        case .none:
+            EmptyView()
+        }
     }
 }
 
 extension CGFloat {
-    static let bottomPadding: Self = 200
+    static let topPadding: Self = 100
 }
 
 #Preview(

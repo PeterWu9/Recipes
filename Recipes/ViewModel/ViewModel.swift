@@ -7,40 +7,41 @@
 
 import Foundation
 import RecipesRepository
+import SwiftUI
 
 @MainActor
 @Observable
 final class ViewModel {
     typealias CellData = RecipeCell.CellData
-    /// Latest valid and non-empty fetched result from `fetchAllRecipes` call
-    private(set) var cachedAllRecipes = [CellData]()
     
     private let repository: any RecipesRepository
-    
-    private(set) var loadingState: LoadingState?
-    
-    enum LoadingState: Equatable {
-        case loading
-        case loaded(LoadResult)
-        enum LoadResult: Equatable {
-            case empty, withLoad([CellData]), withError(String)
+            
+    var allRecipes: [CellData] {
+        if case .success(let recipes) = loadingResult {
+            recipes
+        } else {
+            []
         }
     }
     
+    private(set) var loadingResult: Result<[CellData], Error>?
+
+    private(set) var loadingState: LoadingState = .none
+        
     init(repository: any RecipesRepository) {
         self.repository = repository
     }
     
     func fetchAllRecipes() async {
-        if loadingState == .loading {
+        if loadingState.isLoading {
             print("Still loading...skip")
             return
         }
         
-        loadingState = .loading
+        loadingState.start()
         
         do {
-            let fetched = try await repository.fetchAllRecipes().map {
+            let allRecipes = try await repository.fetchAllRecipes().map {
                 CellData.init(
                     id: $0.id,
                     name: $0.name,
@@ -49,15 +50,48 @@ final class ViewModel {
                 )
             }
             
-            if fetched.isEmpty {
-                loadingState = .loaded(.empty)
-            } else {
-                loadingState = .loaded(.withLoad(fetched))
-                cachedAllRecipes = fetched
-            }
+            loadingState = .loaded()
+            loadingResult = .success(allRecipes)
         } catch {
-            loadingState = LoadingState
-                .loaded(.withError(error.localizedDescription))
+            print(error.localizedDescription)
+            loadingState = .loaded(withError: error.localizedDescription)
+            loadingResult = .failure(error)
+        }
+    }
+}
+
+extension ViewModel {
+    enum LoadingState: Equatable {
+        case none, isLoading(isInitial: Bool), loaded(withError: String? = nil)
+        
+        var isLoading: Bool {
+            if case .isLoading = self {
+                true
+            } else {
+                false
+            }
+        }
+        
+        mutating func start() {
+            switch self {
+            case .isLoading:
+                print("Already loading - invalid operation")
+            case .loaded:
+                self = .isLoading(isInitial: false)
+            case .none:
+                self = .isLoading(isInitial: true)
+            }
+        }
+        
+        mutating func stop(with error: Error? = nil) {
+            switch self {
+            case .none:
+                print("Never started - invalid operation")
+            case .isLoading:
+                self = .loaded(withError: error?.localizedDescription)
+            case .loaded:
+                print("Already stopped - invalid operation")
+            }
         }
     }
 }
