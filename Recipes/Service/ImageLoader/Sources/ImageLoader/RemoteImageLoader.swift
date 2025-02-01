@@ -20,7 +20,7 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
             throw ImageLoaderError.invalidUrl(url)
         }
         
-        if let fileName = fileName(from: unwrappedUrl),
+        if let fileName = Self.fileName(from: unwrappedUrl),
            let imageData = cache.item(for: fileName) {
             print("\(unwrappedUrl) retrieved from cache, under \(fileName)")
             return (unwrappedUrl.absoluteString, imageData)
@@ -37,7 +37,7 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
             }
             print("\(unwrappedUrl) downloaded")
             // cache data
-            if let fileName = fileName(from: unwrappedUrl) {
+            if let fileName = Self.fileName(from: unwrappedUrl) {
                 cache.set(data, for: fileName)
                 print("\(unwrappedUrl) saved to cache, under \(fileName)")
             }
@@ -45,7 +45,7 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
         }
     }
     
-    private func fileName(from url: URL) -> String? {
+    public static func fileName(from url: URL) -> String? {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return nil
         }

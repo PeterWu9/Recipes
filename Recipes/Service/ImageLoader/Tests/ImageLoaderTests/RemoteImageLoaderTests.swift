@@ -22,7 +22,9 @@ struct RemoteImageLoaderTests {
     @Test func remoteImageFirstLoad() async throws {
         let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/small.jpg"
         let (_, data) = try await loader.fetch(urlString)
-        let cachedData = try #require(cache.item(for: urlString))
+        let cachedData = try #require(
+            cache.item(for: RemoteImageLoader.fileName(from: URL(string: urlString)!)!)
+        )
         #expect(data == (cachedData as Data))
     }
 }
