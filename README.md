@@ -3,6 +3,20 @@
 
 ### Summary: Include screen shots or a video of your app highlighting its features
 
+This app features: 
+- Fetch list of recipes from remote server and render them in a list
+- For each recipe:
+  - Images are only being loaded when user scrolls to the recipe (lazy load)
+  - Images are cached to disk when it's first loaded.  Subsequent access to image are retrieved from cache, saving making repeated network operation for the same resource
+- Pull to refresh
+https://github.com/user-attachments/assets/5ad8c4be-bb97-4107-bf14-82c0d1f7e5be
+
+- Empty State for when no recipes have been fetched from server
+https://github.com/user-attachments/assets/4d8b574d-1a4d-43dc-b708-3cb1046e46b1
+
+- Error state for when the app encounters error
+
+https://github.com/user-attachments/assets/95106bd7-480b-4d93-b1c1-5b4ca12489a9
 
 ### Focus Areas: What specific areas of the project did you prioritize? Why did you choose to focus on these areas?
 
