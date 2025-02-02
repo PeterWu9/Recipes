@@ -41,6 +41,10 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
     
     public func item(for key: String) -> Data? {
         print(#function, key)
+        guard fileManager.fileExists(atPath: fileUrl(for: key).path()) else {
+            print("Data not found for \(key)")
+            return nil
+        }
         do {
             return try Data(contentsOf: fileUrl(for: key))
         } catch {
