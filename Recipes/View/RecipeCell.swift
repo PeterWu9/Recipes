@@ -43,13 +43,24 @@ struct RecipeCell: View {
             Image(uiImage: image)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-        case .failure:
-            RoundedRectangle(cornerRadius: 8)
-                .fill(.red)
+        case .failure(let error):
+            if error is CancellationError || (
+                error as? URLError
+            )?.code == .cancelled {
+                placeHolder
+                    .fill(.gray)
+            } else {
+                placeHolder
+                    .fill(.red)
+            }
         case nil:
-            RoundedRectangle(cornerRadius: 8)
+            placeHolder
                 .fill(.gray)
         }
+    }
+    
+    var placeHolder: some Shape {
+        RoundedRectangle(cornerRadius: 8)
     }
     
     struct CellData: Equatable {
