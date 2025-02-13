@@ -1,0 +1,57 @@
+{
+  "configurations" : [
+    {
+      "id" : "31BFD176-18AB-42B9-8996-138479AC0385",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Recipes.xcodeproj",
+      "identifier" : "F914E5702D402F350078FD51",
+      "name" : "Recipes"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Recipes\/Service\/ImageLoader",
+        "identifier" : "ImageLoaderTests",
+        "name" : "ImageLoaderTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Recipes\/Service\/Cache",
+        "identifier" : "CacheTests",
+        "name" : "CacheTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Recipes.xcodeproj",
+        "identifier" : "F914E5802D402F360078FD51",
+        "name" : "RecipesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Recipes\/Model\/RecipesRepository",
+        "identifier" : "RecipesRepositoryTests",
+        "name" : "RecipesRepositoryTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Recipes\/Service\/APIClient",
+        "identifier" : "APIClientTests",
+        "name" : "APIClientTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -28,6 +28,7 @@
 		F914E5712D402F350078FD51 /* Recipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F914E5812D402F360078FD51 /* RecipesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F938809B2D4F88CE0028A563 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F94294922D5E983C009B1BCA /* Recipes.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Recipes.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -83,6 +84,7 @@
 		F914E5682D402F350078FD51 = {
 			isa = PBXGroup;
 			children = (
+				F94294922D5E983C009B1BCA /* Recipes.xctestplan */,
 				F938809B2D4F88CE0028A563 /* README.md */,
 				F914E5732D402F350078FD51 /* Recipes */,
 				F914E5842D402F370078FD51 /* RecipesTests */,
