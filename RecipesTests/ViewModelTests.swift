@@ -17,21 +17,26 @@ struct ViewModelTests {
         await vm.fetchAllRecipes()
         let fetchedFromRepository = try await repository.fetchAllRecipes().map {
             RecipeCell
-            .CellData.init(
-                id: $0.id,
-                name: $0.name,
-                cuisineName: $0.cuisine.title,
-                imageUrl: $0.photoUrl?.urlString
-            )}
-        await #expect(
-            vm.loadingState == .loaded(.withLoad(fetchedFromRepository))
-        )
+                .CellData.init(
+                    id: $0.id,
+                    name: $0.name,
+                    cuisineName: $0.cuisine.title,
+                    imageUrl: $0.photoUrl?.urlString
+                )}
+        await #expect(vm.loadingState == .loaded(withError: nil))
+        let result = try #require(await vm.loadingResult)
+        if case .success(let data) = result,
+           data == fetchedFromRepository {
+            #expect(true)
+        } else {
+            #expect(Bool(false))
+        }
     }
     
     @Test func loadingStateEmpty() async throws {
         let vm = await ViewModel(repository: RemoteRecipesRepository.empty)
         await vm.fetchAllRecipes()
-        await #expect(vm.loadingState == .loaded(.empty))
+        await #expect(vm.loadingState == .loaded(withError: nil))
     }
     
     @Test func loadingStateWithError() async throws {
@@ -43,7 +48,7 @@ struct ViewModelTests {
         } catch {
             await #expect(
                 vm.loadingState ==
-                    .loaded(.withError(error.localizedDescription))
+                    .loaded(withError: error.localizedDescription)
             )
         }
     }
