@@ -37,6 +37,13 @@ struct ViewModelTests {
         let vm = await ViewModel(repository: RemoteRecipesRepository.empty)
         await vm.fetchAllRecipes()
         await #expect(vm.loadingState == .loaded(withError: nil))
+        let result = try #require(await vm.loadingResult)
+        if case .success(let data) = result,
+           data.isEmpty {
+            #expect(true)
+        } else {
+            #expect(Bool(false))
+        }
     }
     
     @Test func loadingStateWithError() async throws {
