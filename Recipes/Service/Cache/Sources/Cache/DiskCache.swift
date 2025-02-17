@@ -66,15 +66,8 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
 
     public func set(_ item: Data, for key: String) {
         print(#function, key)
-        // Only proceed to write if the file does not already exist
         let url = urlStore[key]
-        guard urlStore.data(forKey: key) == nil else {
-            print("Data already exists for \(key) - skip")
-            return
-        }
-        
         do {
-            print("Writing to \(url.absoluteString)")
             try item.write(to: url, options: .atomic)
             urlStore.cache(item, forKey: key)
         } catch {
