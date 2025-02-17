@@ -33,6 +33,7 @@ final class ViewModel {
     }
     
     func fetchAllRecipes() async {
+        print(#function)
         if loadingState.isLoading {
             print("Still loading...skip")
             return
@@ -52,10 +53,12 @@ final class ViewModel {
             
             loadingState = .loaded()
             loadingResult = .success(allRecipes)
+            print("Fetch completed")
         } catch {
             print(error.localizedDescription)
             loadingState = .loaded(withError: error.localizedDescription)
             loadingResult = .failure(error)
+            print("Fetch completed with error")
         }
     }
 }
