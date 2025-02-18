@@ -12,52 +12,73 @@ import SwiftUI
 struct RecipesList: View {
     let recipesData: [RecipeCell.CellData]
     
-    @State private var recipes: [RecipeCell.CellData]
-    @State private var nameSortSelection = SortSelection.default
+    @State private var recipes = [RecipeCell.CellData]()
+    @State private var sortSelection = SortSelection.name
+    @State private var orderSelection = Order.alphabetical
     
     init(recipes: [RecipeCell.CellData]) {
         self.recipesData = recipes
-        _recipes = .init(wrappedValue: recipes)
     }
     
-    enum SortSelection: String {
+    enum SortSelection: String, CaseIterable {
+        case name, cuisine
+    }
+    enum Order: String, CaseIterable {
         case alphabetical = "A-Z"
         case alphabeticalReversed = "Z-A"
-        case `default` = "default"
+        
+        var sortOrder: SortOrder {
+            switch self {
+            case .alphabetical: .forward
+            case .alphabeticalReversed: .reverse
+            }
+        }
     }
 
     var body: some View {
-        let _ = Self._printChanges()
         LazyVStack(alignment: .leading) {
             ForEach(recipes) {
                 RecipeCell(data: $0)
             }
         }
+        .task {
+            self.recipes = recipesData.sorted(using: KeyPathComparator(\.name))
+        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu("Sort By") {
-                    Picker("Name", selection: $nameSortSelection) {
-                        Text(SortSelection.default.rawValue)
-                            .tag(SortSelection.default)
-                        Text(SortSelection.alphabetical.rawValue)
-                            .tag(SortSelection.alphabetical)
-                        Text(SortSelection.alphabeticalReversed.rawValue)
-                            .tag(SortSelection.alphabeticalReversed)
+                    Picker("Cuisine or Name", selection: $sortSelection) {
+                        ForEach(SortSelection.allCases, id: \.self) {
+                            Text($0.rawValue.capitalized)
+                                .tag($0)
+                        }
+                    }
+                    Picker("Order", selection: $orderSelection) {
+                        ForEach(Order.allCases, id: \.self) {
+                            Text($0.rawValue)
+                                .tag($0)
+                        }
                     }
                 }
             }
         }
-        .onChange(of: nameSortSelection, { _, newValue in
-                switch newValue {
-                case .alphabetical:
-                    recipes = recipesData.sorted(using: KeyPathComparator(\.name))
-                case .alphabeticalReversed:
-                    recipes = recipesData
-                        .sorted(using: KeyPathComparator(\.name, order: .reverse))
-                case .default:
-                    recipes = recipesData
-                }
+        .onChange(of: sortSelection, { _, newValue in
+            recipes = recipesData
+                .sorted(using: comparator(newValue, orderSelection))
         })
+        .onChange(of: orderSelection) { _, newValue in
+            recipes = recipesData
+                .sorted(using: comparator(sortSelection, newValue))
+        }
+    }
+    
+    private func comparator(_ sortSelection: SortSelection, _ orderSelection: Order) -> KeyPathComparator<RecipeCell.CellData> {
+        switch sortSelection {
+        case .cuisine:
+            KeyPathComparator(\.cuisineName, order: orderSelection.sortOrder)
+        case .name:
+            KeyPathComparator(\.name, order: orderSelection.sortOrder)
+        }
     }
 }
 
