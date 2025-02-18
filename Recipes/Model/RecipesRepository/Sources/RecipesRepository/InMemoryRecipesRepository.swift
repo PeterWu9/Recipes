@@ -46,7 +46,7 @@ public final class InMemoryRecipesRepository: RecipesRepository {
     }
     
     public func fetchAllRecipes() async throws -> [Recipe] {
-        try await ContinuousClock().sleep(for: configuration.delay)
+        try await ContinuousClock.continuous.sleep(for: configuration.delay)
         return switch configuration.mode {
         case .allRecipes, .malformed:
             try allRecipes
