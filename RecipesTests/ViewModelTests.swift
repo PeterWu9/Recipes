@@ -16,7 +16,7 @@ struct ViewModelTests {
         let vm = await ViewModel(repository: repository)
         await vm.fetchAllRecipes()
         let fetchedFromRepository = try await repository.fetchAllRecipes().map {
-            RecipeCell
+            ViewModel
                 .CellData.init(
                     id: $0.id,
                     name: $0.name,
