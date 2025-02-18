@@ -16,6 +16,7 @@ struct RecipesList: View {
     @State private var recipes = [CellData]()
     @State private var sortSelection = SortSelection.name
     @State private var orderSelection = Order.alphabetical
+    @State private var query = ""
     
     init(recipes: [CellData]) {
         self.recipesData = recipes
@@ -42,6 +43,11 @@ struct RecipesList: View {
                 RecipeCell(data: $0)
             }
         }
+        .searchable(
+            text: $query,
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: Text("Search by name or cuisine")
+        )
         .task {
             self.recipes = recipesData.sorted(using: KeyPathComparator(\.name))
         }
@@ -63,14 +69,32 @@ struct RecipesList: View {
                 }
             }
         }
-        .onChange(of: sortSelection, { _, newValue in
-            recipes = recipesData
-                .sorted(using: comparator(newValue, orderSelection))
+        .onChange(of: query, { _, _ in
+            filterAndSort()
         })
-        .onChange(of: orderSelection) { _, newValue in
-            recipes = recipesData
-                .sorted(using: comparator(sortSelection, newValue))
+        .onChange(of: sortSelection, { _, _ in
+            filterAndSort()
+        })
+        .onChange(of: orderSelection) { _, _ in
+            filterAndSort()
         }
+    }
+    
+    private func filterAndSort() {
+        let query = query.lowercased()
+        recipes = recipesData
+            .lazy
+            .filter {
+                guard !query.isEmpty else {
+                    return true
+                }
+                return $0.name
+                    .lowercased()
+                    .contains(query)
+                || $0.cuisineName.lowercased()
+                    .contains(query)
+            }
+            .sorted(using: comparator(sortSelection, orderSelection))
     }
     
     private func comparator(_ sortSelection: SortSelection, _ orderSelection: Order) -> KeyPathComparator<CellData> {
