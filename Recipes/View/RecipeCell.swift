@@ -8,7 +8,7 @@ import SwiftUI
 
 struct RecipeCell: View {
     @Environment(ImageAssetViewModel.self) private var assetVm
-    let data: CellData
+    let data: ViewModel.CellData
     @State private var imageResult: Result<UIImage, Error>?
     
     var body: some View {
@@ -61,14 +61,7 @@ struct RecipeCell: View {
     
     var placeHolder: some Shape {
         RoundedRectangle(cornerRadius: 8)
-    }
-    
-    struct CellData: Equatable {
-        let id: String
-        let name: String
-        let cuisineName: String
-        let imageUrl: String?
-    }
+    }    
 }
 
 #Preview("Cell", traits: .modifier(BundleImageAssetPreviewData())) {

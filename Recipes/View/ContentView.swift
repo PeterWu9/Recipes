@@ -44,7 +44,7 @@ struct ContentView: View {
         }
     }
     
-    @ViewBuilder func view(for loadingResult: Result<[RecipeCell.CellData], Error>?) -> some View {
+    @ViewBuilder func view(for loadingResult: Result<[ViewModel.CellData], Error>?) -> some View {
         switch viewModel.loadingResult {
         case .success(let recipes):
             if recipes.isEmpty {

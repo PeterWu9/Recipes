@@ -10,13 +10,14 @@ import RecipesRepository
 import SwiftUI
 
 struct RecipesList: View {
-    let recipesData: [RecipeCell.CellData]
+    typealias CellData = ViewModel.CellData
+    let recipesData: [CellData]
     
-    @State private var recipes = [RecipeCell.CellData]()
+    @State private var recipes = [CellData]()
     @State private var sortSelection = SortSelection.name
     @State private var orderSelection = Order.alphabetical
     
-    init(recipes: [RecipeCell.CellData]) {
+    init(recipes: [CellData]) {
         self.recipesData = recipes
     }
     
@@ -72,7 +73,7 @@ struct RecipesList: View {
         }
     }
     
-    private func comparator(_ sortSelection: SortSelection, _ orderSelection: Order) -> KeyPathComparator<RecipeCell.CellData> {
+    private func comparator(_ sortSelection: SortSelection, _ orderSelection: Order) -> KeyPathComparator<CellData> {
         switch sortSelection {
         case .cuisine:
             KeyPathComparator(\.cuisineName, order: orderSelection.sortOrder)
@@ -125,4 +126,4 @@ struct PreviewContainer: View {
 //    .padding()
 //}
 
-extension RecipeCell.CellData: Identifiable { }
+extension ViewModel.CellData: Identifiable { }

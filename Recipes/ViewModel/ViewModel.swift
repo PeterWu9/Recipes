@@ -12,7 +12,6 @@ import SwiftUI
 @MainActor
 @Observable
 final class ViewModel {
-    typealias CellData = RecipeCell.CellData
     
     private let repository: any RecipesRepository
             
@@ -96,5 +95,14 @@ extension ViewModel {
                 print("Already stopped - invalid operation")
             }
         }
+    }
+}
+
+extension ViewModel {
+    struct CellData: Equatable {
+        let id: String
+        let name: String
+        let cuisineName: String
+        let imageUrl: String?
     }
 }

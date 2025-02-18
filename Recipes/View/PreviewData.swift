@@ -70,7 +70,7 @@ struct BundleImageAssetPreviewData: PreviewModifier {
 // TODO: Conditionally compile only when running SwiftUI Preview
 struct AllRecipesPreviewContainer<Content: View>: View {
     @Environment(ViewModel.self) var viewModel
-    var makeContentWithRecipes: ([RecipeCell.CellData]) -> Content
+    var makeContentWithRecipes: ([ViewModel.CellData]) -> Content
     var body: some View {
         makeContentWithRecipes(viewModel.allRecipes)
             .task {
