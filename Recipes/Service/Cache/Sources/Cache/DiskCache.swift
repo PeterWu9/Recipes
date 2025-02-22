@@ -13,6 +13,8 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
     private let fileManager: FileManager
     private let appCacheDirectory: URL
     
+    private let ioQueue = DispatchQueue(label: "DiskCache.ioQueue")
+    
     public init(fileManager: FileManager = .default, directoryName: String) throws {
         // TODO: Separate module for File IO
         self.fileManager = fileManager
@@ -64,14 +66,22 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
         }
     }
 
-    public func set(_ item: Data, for key: String) {
+    public func set(_ item: Data, for key: String) async {
         print(#function, key)
-        let url = urlStore[key]
-        do {
-            try item.write(to: url, options: .atomic)
-            urlStore.cache(item, forKey: key)
-        } catch {
-            print("Unable to write data to \(url.path()) due to \(error.localizedDescription)")
+        await withCheckedContinuation { continuation in
+            ioQueue.async { [weak self] in
+                guard let url = self?.urlStore[key] else {
+                    fatalError("Internal URLStore error")
+                }
+
+                do {
+                    try item.write(to: url, options: .atomic)
+                    self?.urlStore.cache(item, forKey: key)
+                } catch {
+                    print("Unable to write data to \(url.path()) due to \(error.localizedDescription)")
+                }
+                continuation.resume()
+            }
         }
     }
 

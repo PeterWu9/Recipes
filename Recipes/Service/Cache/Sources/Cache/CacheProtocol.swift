@@ -12,7 +12,7 @@ public protocol CacheProtocol<Key, Value>: Sendable {
     associatedtype Key: Hashable
     associatedtype Value: Codable
     func item(for key: Key) -> Value?
-    func set(_ item: Value, for key: Key)
+    func set(_ item: Value, for key: Key) async
     func removeItem(for key: Key)
     func removeAll()
 }

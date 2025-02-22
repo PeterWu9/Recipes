@@ -52,7 +52,7 @@ public actor BundleImageLoader: ImageLoaderProtocol {
             try await Task.sleep(for: .seconds(maxLoadingTime))
             let data = image.pngData()!
             let image = try transform(data)
-            cache.set(data, for: url)
+            await cache.set(data, for: url)
             return (url, image)
         }
     }

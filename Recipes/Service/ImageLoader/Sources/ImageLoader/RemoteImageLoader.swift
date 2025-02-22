@@ -59,7 +59,7 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
             let image = try transform(data)
             if let fileName = Self.fileName(from: unwrappedUrl) {
                 // MARK: Will suspend.  Access to cache is serialized.
-                cache.set(data, for: fileName)
+                await cache.set(data, for: fileName)
                 print("\(unwrappedUrl) saved to cache, under \(fileName)")
             }
             return (unwrappedUrl.absoluteString, image)
