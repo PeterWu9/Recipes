@@ -9,10 +9,10 @@ import Foundation
 public protocol CacheProtocol<Key, Value>: Sendable {
     // TODO: Memory size
     // TODO: Cache eviction
-    associatedtype Key: Hashable
-    associatedtype Value: Codable
-    func item(for key: Key) -> Value?
+    associatedtype Key: Hashable & Sendable
+    associatedtype Value: Codable & Sendable
+    func item(for key: Key) async -> Value?
     func set(_ item: Value, for key: Key) async
-    func removeItem(for key: Key)
-    func removeAll()
+    func removeItem(for key: Key) async
+    func removeAll() async
 }

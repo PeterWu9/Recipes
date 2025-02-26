@@ -45,7 +45,7 @@ public actor BundleImageLoader: ImageLoaderProtocol {
             throw ImageLoaderError.invalidUrl(url)
         }
         
-        if let imageData = cache.item(for: url) {
+        if let imageData = await cache.item(for: url) {
             let image = try transform(imageData)
             return (url, image)
         } else {

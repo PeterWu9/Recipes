@@ -9,9 +9,9 @@ import Cache
 import Foundation
 import UIKit
 
-public actor RemoteImageLoader: ImageLoaderProtocol {
+public final class RemoteImageLoader: ImageLoaderProtocol {
     private let cache: any CacheProtocol<String, Data>
-    private let transform: (Data) throws -> UIImage
+    private let transform: @Sendable (Data) throws -> UIImage
         
     public init(
         transform: @escaping @Sendable (Data) throws -> UIImage = RemoteImageLoader.transform
@@ -39,7 +39,7 @@ public actor RemoteImageLoader: ImageLoaderProtocol {
         }
         
         if let fileName = Self.fileName(from: unwrappedUrl),
-           let imageData = cache.item(for: fileName) {
+           let imageData = await cache.item(for: fileName) {
             print("\(unwrappedUrl) retrieved from cache, under \(fileName)")
             let image = try transform(imageData)
             return (unwrappedUrl.absoluteString, image)

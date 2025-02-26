@@ -8,12 +8,15 @@
 import Foundation
 
 // `FileManager` is thread-safe, ok to declare conformance to Sendable requirement without compiler enforcement
-public final class DiskCache: @unchecked Sendable, CacheProtocol {
+public actor DiskCache: CacheProtocol {
     
     private let fileManager: FileManager
     private let appCacheDirectory: URL
+    let ioQueue = DispatchSerialQueue(label: "FileIO")
     
-    private let ioQueue = DispatchQueue(label: "DiskCache.ioQueue")
+    public nonisolated var unownedExecutor: UnownedSerialExecutor {
+        ioQueue.asUnownedSerialExecutor()
+    }
     
     public init(fileManager: FileManager = .default, directoryName: String) throws {
         // TODO: Separate module for File IO
@@ -41,21 +44,21 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
     
     // construct URL from key
     
-    public func item(for key: String) -> Data? {
+    public func item(for key: String) async -> Data? {
         print(#function, key)
-        let url = urlStore[key]
+        let url = await urlStore[key]
         guard fileManager.fileExists(atPath: url.path()) else {
             print("Data not found for \(key)")
             return nil
         }
         do {
-            if let data = urlStore.data(forKey: key) {
+            if let data = await urlStore.data(forKey: key) {
                 print("Retrieved from URL Cache")
                 return data
             } else {
                 let data = try Data(contentsOf: url)
                 // cache data to URL resource
-                urlStore.cache(data, forKey: key)
+                await urlStore.cache(data, forKey: key)
                 return data
             }
         } catch {
@@ -68,28 +71,21 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
 
     public func set(_ item: Data, for key: String) async {
         print(#function, key)
-        await withCheckedContinuation { continuation in
-            ioQueue.async { [weak self] in
-                guard let url = self?.urlStore[key] else {
-                    fatalError("Internal URLStore error")
-                }
+        let url = await urlStore[key]
 
-                do {
-                    try item.write(to: url, options: .atomic)
-                    self?.urlStore.cache(item, forKey: key)
-                } catch {
-                    print("Unable to write data to \(url.path()) due to \(error.localizedDescription)")
-                }
-                continuation.resume()
-            }
+        do {
+            try item.write(to: url, options: .atomic)
+            await urlStore.cache(item, forKey: key)
+        } catch {
+            print("Unable to write data to \(url.path()) due to \(error.localizedDescription)")
         }
     }
 
-    public func removeItem(for key: String) {
+    public func removeItem(for key: String) async {
         print(#function, key)
         do {
-            try fileManager.removeItem(at: urlStore[key])
-            urlStore.removeFromCache(key: key)
+            try await fileManager.removeItem(at: urlStore[key])
+            await urlStore.removeFromCache(key: key)
         } catch {
             print(
                 "Unable to remove data for \(key) from \(appCacheDirectory.absoluteString) due to \(error.localizedDescription)"
@@ -97,7 +93,7 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
         }
     }
 
-    public func removeAll() {
+    public func removeAll() async {
         print(#function)
         do {
             let fileUrls = try fileManager.contentsOfDirectory(
@@ -114,7 +110,7 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
                     continue
                 }
             }
-            urlStore.removeAll()
+            await urlStore.removeAll()
         } catch {
             print(
                 "Unable to remove files in directory \(appCacheDirectory.absoluteString) due to \(error.localizedDescription)"
@@ -124,7 +120,7 @@ public final class DiskCache: @unchecked Sendable, CacheProtocol {
     
     private lazy var urlStore = URLStore(directory: appCacheDirectory)
     
-    final class URLStore {
+    actor URLStore {
         var cache = [String: URL]()
         var appCacheDirectory: URL
         init(directory: URL) {
